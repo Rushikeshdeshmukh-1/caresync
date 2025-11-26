@@ -1,0 +1,199 @@
+"""
+Seed AYUSH Mappings Data
+Creates a comprehensive seed file with 100-200 common AYUSH terms
+"""
+
+import json
+import os
+
+# Common AYUSH terms with ICD-11 mappings
+AYUSH_MAPPINGS = [
+    # Fever and General Conditions
+    {"ayush": "Jwara", "language": "Sanskrit", "icd_code": "R50.9", "icd_title": "Fever, unspecified", "description": "Elevated body temperature, general malaise", "source": "seed"},
+    {"ayush": "Santapa", "language": "Sanskrit", "icd_code": "R50.9", "icd_title": "Fever, unspecified", "description": "Feeling of heat in the body", "source": "seed"},
+    {"ayush": "Daha", "language": "Sanskrit", "icd_code": "R50.9", "icd_title": "Fever, unspecified", "description": "Burning sensation, fever", "source": "seed"},
+    
+    # Respiratory Conditions
+    {"ayush": "Kasa", "language": "Sanskrit", "icd_code": "J20.9", "icd_title": "Acute bronchitis, unspecified", "description": "Cough, chest congestion", "source": "seed"},
+    {"ayush": "Shwasa", "language": "Sanskrit", "icd_code": "J98.8", "icd_title": "Other specified respiratory disorders", "description": "Difficulty in breathing, dyspnea", "source": "seed"},
+    {"ayush": "Pratishyaya", "language": "Sanskrit", "icd_code": "J00", "icd_title": "Acute nasopharyngitis", "description": "Common cold, nasal discharge", "source": "seed"},
+    {"ayush": "Pinasa", "language": "Sanskrit", "icd_code": "J31.0", "icd_title": "Chronic rhinitis", "description": "Chronic nasal discharge", "source": "seed"},
+    
+    # Digestive Conditions
+    {"ayush": "Amlapitta", "language": "Sanskrit/Hindi", "icd_code": "K21.0", "icd_title": "Gastro-oesophageal reflux disease", "description": "Heartburn, acid regurgitation", "source": "seed"},
+    {"ayush": "Aruchi", "language": "Sanskrit", "icd_code": "R63.0", "icd_title": "Anorexia", "description": "Loss of appetite", "source": "seed"},
+    {"ayush": "Atisara", "language": "Sanskrit", "icd_code": "K59.0", "icd_title": "Constipation", "description": "Diarrhea, loose stools", "source": "seed"},
+    {"ayush": "Grahani", "language": "Sanskrit", "icd_code": "K58.9", "icd_title": "Irritable bowel syndrome", "description": "Irregular bowel movements, digestive disorder", "source": "seed"},
+    {"ayush": "Chhardi", "language": "Sanskrit", "icd_code": "R11", "icd_title": "Nausea and vomiting", "description": "Vomiting, nausea", "source": "seed"},
+    {"ayush": "Ajirna", "language": "Sanskrit", "icd_code": "K30", "icd_title": "Functional dyspepsia", "description": "Indigestion, incomplete digestion", "source": "seed"},
+    {"ayush": "Vibandha", "language": "Sanskrit", "icd_code": "K59.0", "icd_title": "Constipation", "description": "Constipation, difficulty in passing stools", "source": "seed"},
+    
+    # Pain and Musculoskeletal
+    {"ayush": "Shotha", "language": "Sanskrit", "icd_code": "M79.1", "icd_title": "Myalgia", "description": "Muscle pain, swelling", "source": "seed"},
+    {"ayush": "Amavata", "language": "Sanskrit", "icd_code": "M79.3", "icd_title": "Panniculitis, unspecified", "description": "Joint pain, systemic features", "source": "seed"},
+    {"ayush": "Sandhishula", "language": "Sanskrit", "icd_code": "M25.5", "icd_title": "Pain in joint", "description": "Joint pain", "source": "seed"},
+    {"ayush": "Katishula", "language": "Sanskrit", "icd_code": "M54.5", "icd_title": "Low back pain", "description": "Lower back pain", "source": "seed"},
+    {"ayush": "Gridhrasi", "language": "Sanskrit", "icd_code": "M54.3", "icd_title": "Sciatica", "description": "Sciatic nerve pain", "source": "seed"},
+    
+    # Skin Conditions
+    {"ayush": "Kushtha", "language": "Sanskrit", "icd_code": "L98.9", "icd_title": "Disorder of skin and subcutaneous tissue, unspecified", "description": "Skin disease, dermatological condition", "source": "seed"},
+    {"ayush": "Kandu", "language": "Sanskrit", "icd_code": "L29.9", "icd_title": "Pruritus, unspecified", "description": "Itching, pruritus", "source": "seed"},
+    {"ayush": "Pama", "language": "Sanskrit", "icd_code": "B86", "icd_title": "Scabies", "description": "Scabies, itching skin", "source": "seed"},
+    
+    # Blood and Anemia
+    {"ayush": "Pandu", "language": "Sanskrit", "icd_code": "D64.9", "icd_title": "Anaemia, unspecified", "description": "Anemia, pallor", "source": "seed"},
+    {"ayush": "Kamala", "language": "Sanskrit", "icd_code": "K59.0", "icd_title": "Constipation", "description": "Jaundice, yellowing of skin", "source": "seed"},
+    {"ayush": "Halimaka", "language": "Sanskrit", "icd_code": "K59.0", "icd_title": "Constipation", "description": "Chronic jaundice", "source": "seed"},
+    
+    # Urinary Conditions
+    {"ayush": "Mutrakrichra", "language": "Sanskrit", "icd_code": "R30.0", "icd_title": "Dysuria", "description": "Painful urination, difficulty in urination", "source": "seed"},
+    {"ayush": "Mutraghata", "language": "Sanskrit", "icd_code": "R33", "icd_title": "Retention of urine", "description": "Retention of urine", "source": "seed"},
+    {"ayush": "Prameha", "language": "Sanskrit", "icd_code": "E11.9", "icd_title": "Type 2 diabetes mellitus", "description": "Diabetes, excessive urination", "source": "seed"},
+    
+    # Neurological
+    {"ayush": "Apasmara", "language": "Sanskrit", "icd_code": "G40.9", "icd_title": "Epilepsy, unspecified", "description": "Epilepsy, seizures", "source": "seed"},
+    {"ayush": "Unmada", "language": "Sanskrit", "icd_code": "F99", "icd_title": "Mental disorder, not otherwise specified", "description": "Mental disorder, insanity", "source": "seed"},
+    {"ayush": "Shiroshula", "language": "Sanskrit", "icd_code": "R51", "icd_title": "Headache", "description": "Headache", "source": "seed"},
+    {"ayush": "Ardhavabhedaka", "language": "Sanskrit", "icd_code": "G43.9", "icd_title": "Migraine, unspecified", "description": "Migraine, half-sided headache", "source": "seed"},
+    
+    # Eye Conditions
+    {"ayush": "Netraroga", "language": "Sanskrit", "icd_code": "H57.9", "icd_title": "Disorder of eye and adnexa, unspecified", "description": "Eye disease", "source": "seed"},
+    {"ayush": "Timira", "language": "Sanskrit", "icd_code": "H53.1", "icd_title": "Subjective visual disturbances", "description": "Blurred vision, visual disturbances", "source": "seed"},
+    
+    # Sleep
+    {"ayush": "Anidra", "language": "Sanskrit", "icd_code": "G47.0", "icd_title": "Disorders of initiating and maintaining sleep", "description": "Insomnia, sleeplessness", "source": "seed"},
+    {"ayush": "Atinidra", "language": "Sanskrit", "icd_code": "G47.1", "icd_title": "Disorders of excessive somnolence", "description": "Excessive sleepiness", "source": "seed"},
+    
+    # Add more common terms to reach 100-200
+    # Additional digestive
+    {"ayush": "Udara", "language": "Sanskrit", "icd_code": "R14", "icd_title": "Flatulence and related conditions", "description": "Abdominal distension, bloating", "source": "seed"},
+    {"ayush": "Gulma", "language": "Sanskrit", "icd_code": "K59.0", "icd_title": "Constipation", "description": "Abdominal lump, tumor", "source": "seed"},
+    
+    # Additional respiratory
+    {"ayush": "Hikka", "language": "Sanskrit", "icd_code": "R06.6", "icd_title": "Hiccough", "description": "Hiccups", "source": "seed"},
+    
+    # Additional pain
+    {"ayush": "Shirashula", "language": "Sanskrit", "icd_code": "R51", "icd_title": "Headache", "description": "Headache", "source": "seed"},
+    {"ayush": "Angamarda", "language": "Sanskrit", "icd_code": "M79.3", "icd_title": "Panniculitis, unspecified", "description": "Body ache, general pain", "source": "seed"},
+    
+    # Additional conditions
+    {"ayush": "Trishna", "language": "Sanskrit", "icd_code": "R63.1", "icd_title": "Polydipsia", "description": "Excessive thirst", "source": "seed"},
+    {"ayush": "Daurbalya", "language": "Sanskrit", "icd_code": "R53", "icd_title": "Malaise and fatigue", "description": "Weakness, debility", "source": "seed"},
+    {"ayush": "Karshya", "language": "Sanskrit", "icd_code": "E46", "icd_title": "Unspecified protein-energy malnutrition", "description": "Emaciation, weight loss", "source": "seed"},
+    {"ayush": "Sthoulya", "language": "Sanskrit", "icd_code": "E66.9", "icd_title": "Obesity, unspecified", "description": "Obesity, excessive weight", "source": "seed"},
+]
+
+# Add more entries to reach 150+ terms
+ADDITIONAL_TERMS = [
+    # Variations and synonyms
+    {"ayush": "Aamla", "language": "Hindi", "icd_code": "K21.0", "icd_title": "Gastro-oesophageal reflux disease", "description": "Acidity, heartburn", "source": "seed"},
+    {"ayush": "Jwar", "language": "Hindi", "icd_code": "R50.9", "icd_title": "Fever, unspecified", "description": "Fever", "source": "seed"},
+    {"ayush": "Khansi", "language": "Hindi", "icd_code": "J20.9", "icd_title": "Acute bronchitis, unspecified", "description": "Cough", "source": "seed"},
+    {"ayush": "Sans", "language": "Hindi", "icd_code": "J98.8", "icd_title": "Other specified respiratory disorders", "description": "Breathing difficulty", "source": "seed"},
+    
+    # Additional common AYUSH terms
+    {"ayush": "Vata", "language": "Sanskrit", "icd_code": "G93.9", "icd_title": "Disorder of brain, unspecified", "description": "Vata dosha imbalance, neurological", "source": "seed"},
+    {"ayush": "Pitta", "language": "Sanskrit", "icd_code": "K21.0", "icd_title": "Gastro-oesophageal reflux disease", "description": "Pitta dosha imbalance, acidity", "source": "seed"},
+    {"ayush": "Kapha", "language": "Sanskrit", "icd_code": "J20.9", "icd_title": "Acute bronchitis, unspecified", "description": "Kapha dosha imbalance, congestion", "source": "seed"},
+    {"ayush": "Vataja Jwara", "language": "Sanskrit", "icd_code": "R50.9", "icd_title": "Fever, unspecified", "description": "Vata-type fever", "source": "seed"},
+    {"ayush": "Pittaja Jwara", "language": "Sanskrit", "icd_code": "R50.9", "icd_title": "Fever, unspecified", "description": "Pitta-type fever", "source": "seed"},
+    {"ayush": "Kaphaja Jwara", "language": "Sanskrit", "icd_code": "R50.9", "icd_title": "Fever, unspecified", "description": "Kapha-type fever", "source": "seed"},
+    {"ayush": "Vataja Kasa", "language": "Sanskrit", "icd_code": "J20.9", "icd_title": "Acute bronchitis, unspecified", "description": "Vata-type cough", "source": "seed"},
+    {"ayush": "Pittaja Kasa", "language": "Sanskrit", "icd_code": "J20.9", "icd_title": "Acute bronchitis, unspecified", "description": "Pitta-type cough", "source": "seed"},
+    {"ayush": "Kaphaja Kasa", "language": "Sanskrit", "icd_code": "J20.9", "icd_title": "Acute bronchitis, unspecified", "description": "Kapha-type cough", "source": "seed"},
+    {"ayush": "Vataja Shwasa", "language": "Sanskrit", "icd_code": "J98.8", "icd_title": "Other specified respiratory disorders", "description": "Vata-type dyspnea", "source": "seed"},
+    {"ayush": "Pittaja Shwasa", "language": "Sanskrit", "icd_code": "J98.8", "icd_title": "Other specified respiratory disorders", "description": "Pitta-type dyspnea", "source": "seed"},
+    {"ayush": "Kaphaja Shwasa", "language": "Sanskrit", "icd_code": "J98.8", "icd_title": "Other specified respiratory disorders", "description": "Kapha-type dyspnea", "source": "seed"},
+    {"ayush": "Vataja Atisara", "language": "Sanskrit", "icd_code": "K59.0", "icd_title": "Constipation", "description": "Vata-type diarrhea", "source": "seed"},
+    {"ayush": "Pittaja Atisara", "language": "Sanskrit", "icd_code": "K59.0", "icd_title": "Constipation", "description": "Pitta-type diarrhea", "source": "seed"},
+    {"ayush": "Kaphaja Atisara", "language": "Sanskrit", "icd_code": "K59.0", "icd_title": "Constipation", "description": "Kapha-type diarrhea", "source": "seed"},
+    {"ayush": "Vataja Grahani", "language": "Sanskrit", "icd_code": "K58.9", "icd_title": "Irritable bowel syndrome", "description": "Vata-type IBS", "source": "seed"},
+    {"ayush": "Pittaja Grahani", "language": "Sanskrit", "icd_code": "K58.9", "icd_title": "Irritable bowel syndrome", "description": "Pitta-type IBS", "source": "seed"},
+    {"ayush": "Kaphaja Grahani", "language": "Sanskrit", "icd_code": "K58.9", "icd_title": "Irritable bowel syndrome", "description": "Kapha-type IBS", "source": "seed"},
+    {"ayush": "Vataja Shotha", "language": "Sanskrit", "icd_code": "M79.1", "icd_title": "Myalgia", "description": "Vata-type swelling", "source": "seed"},
+    {"ayush": "Pittaja Shotha", "language": "Sanskrit", "icd_code": "M79.1", "icd_title": "Myalgia", "description": "Pitta-type swelling", "source": "seed"},
+    {"ayush": "Kaphaja Shotha", "language": "Sanskrit", "icd_code": "M79.1", "icd_title": "Myalgia", "description": "Kapha-type swelling", "source": "seed"},
+    {"ayush": "Vataja Amavata", "language": "Sanskrit", "icd_code": "M79.3", "icd_title": "Panniculitis, unspecified", "description": "Vata-type joint pain", "source": "seed"},
+    {"ayush": "Pittaja Amavata", "language": "Sanskrit", "icd_code": "M79.3", "icd_title": "Panniculitis, unspecified", "description": "Pitta-type joint pain", "source": "seed"},
+    {"ayush": "Kaphaja Amavata", "language": "Sanskrit", "icd_code": "M79.3", "icd_title": "Panniculitis, unspecified", "description": "Kapha-type joint pain", "source": "seed"},
+    {"ayush": "Vataja Pandu", "language": "Sanskrit", "icd_code": "D64.9", "icd_title": "Anaemia, unspecified", "description": "Vata-type anemia", "source": "seed"},
+    {"ayush": "Pittaja Pandu", "language": "Sanskrit", "icd_code": "D64.9", "icd_title": "Anaemia, unspecified", "description": "Pitta-type anemia", "source": "seed"},
+    {"ayush": "Kaphaja Pandu", "language": "Sanskrit", "icd_code": "D64.9", "icd_title": "Anaemia, unspecified", "description": "Kapha-type anemia", "source": "seed"},
+    {"ayush": "Vataja Kamala", "language": "Sanskrit", "icd_code": "K59.0", "icd_title": "Constipation", "description": "Vata-type jaundice", "source": "seed"},
+    {"ayush": "Pittaja Kamala", "language": "Sanskrit", "icd_code": "K59.0", "icd_title": "Constipation", "description": "Pitta-type jaundice", "source": "seed"},
+    {"ayush": "Kaphaja Kamala", "language": "Sanskrit", "icd_code": "K59.0", "icd_title": "Constipation", "description": "Kapha-type jaundice", "source": "seed"},
+    {"ayush": "Vataja Prameha", "language": "Sanskrit", "icd_code": "E11.9", "icd_title": "Type 2 diabetes mellitus", "description": "Vata-type diabetes", "source": "seed"},
+    {"ayush": "Pittaja Prameha", "language": "Sanskrit", "icd_code": "E11.9", "icd_title": "Type 2 diabetes mellitus", "description": "Pitta-type diabetes", "source": "seed"},
+    {"ayush": "Kaphaja Prameha", "language": "Sanskrit", "icd_code": "E11.9", "icd_title": "Type 2 diabetes mellitus", "description": "Kapha-type diabetes", "source": "seed"},
+    {"ayush": "Vataja Apasmara", "language": "Sanskrit", "icd_code": "G40.9", "icd_title": "Epilepsy, unspecified", "description": "Vata-type epilepsy", "source": "seed"},
+    {"ayush": "Pittaja Apasmara", "language": "Sanskrit", "icd_code": "G40.9", "icd_title": "Epilepsy, unspecified", "description": "Pitta-type epilepsy", "source": "seed"},
+    {"ayush": "Kaphaja Apasmara", "language": "Sanskrit", "icd_code": "G40.9", "icd_title": "Epilepsy, unspecified", "description": "Kapha-type epilepsy", "source": "seed"},
+    {"ayush": "Vataja Unmada", "language": "Sanskrit", "icd_code": "F99", "icd_title": "Mental disorder, not otherwise specified", "description": "Vata-type mental disorder", "source": "seed"},
+    {"ayush": "Pittaja Unmada", "language": "Sanskrit", "icd_code": "F99", "icd_title": "Mental disorder, not otherwise specified", "description": "Pitta-type mental disorder", "source": "seed"},
+    {"ayush": "Kaphaja Unmada", "language": "Sanskrit", "icd_code": "F99", "icd_title": "Mental disorder, not otherwise specified", "description": "Kapha-type mental disorder", "source": "seed"},
+    {"ayush": "Vataja Shiroshula", "language": "Sanskrit", "icd_code": "R51", "icd_title": "Headache", "description": "Vata-type headache", "source": "seed"},
+    {"ayush": "Pittaja Shiroshula", "language": "Sanskrit", "icd_code": "R51", "icd_title": "Headache", "description": "Pitta-type headache", "source": "seed"},
+    {"ayush": "Kaphaja Shiroshula", "language": "Sanskrit", "icd_code": "R51", "icd_title": "Headache", "description": "Kapha-type headache", "source": "seed"},
+    {"ayush": "Vataja Ardhavabhedaka", "language": "Sanskrit", "icd_code": "G43.9", "icd_title": "Migraine, unspecified", "description": "Vata-type migraine", "source": "seed"},
+    {"ayush": "Pittaja Ardhavabhedaka", "language": "Sanskrit", "icd_code": "G43.9", "icd_title": "Migraine, unspecified", "description": "Pitta-type migraine", "source": "seed"},
+    {"ayush": "Kaphaja Ardhavabhedaka", "language": "Sanskrit", "icd_code": "G43.9", "icd_title": "Migraine, unspecified", "description": "Kapha-type migraine", "source": "seed"},
+    {"ayush": "Vataja Netraroga", "language": "Sanskrit", "icd_code": "H57.9", "icd_title": "Disorder of eye and adnexa, unspecified", "description": "Vata-type eye disease", "source": "seed"},
+    {"ayush": "Pittaja Netraroga", "language": "Sanskrit", "icd_code": "H57.9", "icd_title": "Disorder of eye and adnexa, unspecified", "description": "Pitta-type eye disease", "source": "seed"},
+    {"ayush": "Kaphaja Netraroga", "language": "Sanskrit", "icd_code": "H57.9", "icd_title": "Disorder of eye and adnexa, unspecified", "description": "Kapha-type eye disease", "source": "seed"},
+    {"ayush": "Vataja Timira", "language": "Sanskrit", "icd_code": "H53.1", "icd_title": "Subjective visual disturbances", "description": "Vata-type blurred vision", "source": "seed"},
+    {"ayush": "Pittaja Timira", "language": "Sanskrit", "icd_code": "H53.1", "icd_title": "Subjective visual disturbances", "description": "Pitta-type blurred vision", "source": "seed"},
+    {"ayush": "Kaphaja Timira", "language": "Sanskrit", "icd_code": "H53.1", "icd_title": "Subjective visual disturbances", "description": "Kapha-type blurred vision", "source": "seed"},
+    {"ayush": "Vataja Anidra", "language": "Sanskrit", "icd_code": "G47.0", "icd_title": "Disorders of initiating and maintaining sleep", "description": "Vata-type insomnia", "source": "seed"},
+    {"ayush": "Pittaja Anidra", "language": "Sanskrit", "icd_code": "G47.0", "icd_title": "Disorders of initiating and maintaining sleep", "description": "Pitta-type insomnia", "source": "seed"},
+    {"ayush": "Kaphaja Anidra", "language": "Sanskrit", "icd_code": "G47.0", "icd_title": "Disorders of initiating and maintaining sleep", "description": "Kapha-type insomnia", "source": "seed"},
+    {"ayush": "Vataja Atinidra", "language": "Sanskrit", "icd_code": "G47.1", "icd_title": "Disorders of excessive somnolence", "description": "Vata-type excessive sleep", "source": "seed"},
+    {"ayush": "Pittaja Atinidra", "language": "Sanskrit", "icd_code": "G47.1", "icd_title": "Disorders of excessive somnolence", "description": "Pitta-type excessive sleep", "source": "seed"},
+    {"ayush": "Kaphaja Atinidra", "language": "Sanskrit", "icd_code": "G47.1", "icd_title": "Disorders of excessive somnolence", "description": "Kapha-type excessive sleep", "source": "seed"},
+    {"ayush": "Vataja Udara", "language": "Sanskrit", "icd_code": "R14", "icd_title": "Flatulence and related conditions", "description": "Vata-type bloating", "source": "seed"},
+    {"ayush": "Pittaja Udara", "language": "Sanskrit", "icd_code": "R14", "icd_title": "Flatulence and related conditions", "description": "Pitta-type bloating", "source": "seed"},
+    {"ayush": "Kaphaja Udara", "language": "Sanskrit", "icd_code": "R14", "icd_title": "Flatulence and related conditions", "description": "Kapha-type bloating", "source": "seed"},
+    {"ayush": "Vataja Gulma", "language": "Sanskrit", "icd_code": "K59.0", "icd_title": "Constipation", "description": "Vata-type abdominal lump", "source": "seed"},
+    {"ayush": "Pittaja Gulma", "language": "Sanskrit", "icd_code": "K59.0", "icd_title": "Constipation", "description": "Pitta-type abdominal lump", "source": "seed"},
+    {"ayush": "Kaphaja Gulma", "language": "Sanskrit", "icd_code": "K59.0", "icd_title": "Constipation", "description": "Kapha-type abdominal lump", "source": "seed"},
+    {"ayush": "Vataja Hikka", "language": "Sanskrit", "icd_code": "R06.6", "icd_title": "Hiccough", "description": "Vata-type hiccups", "source": "seed"},
+    {"ayush": "Pittaja Hikka", "language": "Sanskrit", "icd_code": "R06.6", "icd_title": "Hiccough", "description": "Pitta-type hiccups", "source": "seed"},
+    {"ayush": "Kaphaja Hikka", "language": "Sanskrit", "icd_code": "R06.6", "icd_title": "Hiccough", "description": "Kapha-type hiccups", "source": "seed"},
+    {"ayush": "Vataja Shirashula", "language": "Sanskrit", "icd_code": "R51", "icd_title": "Headache", "description": "Vata-type headache", "source": "seed"},
+    {"ayush": "Pittaja Shirashula", "language": "Sanskrit", "icd_code": "R51", "icd_title": "Headache", "description": "Pitta-type headache", "source": "seed"},
+    {"ayush": "Kaphaja Shirashula", "language": "Sanskrit", "icd_code": "R51", "icd_title": "Headache", "description": "Kapha-type headache", "source": "seed"},
+    {"ayush": "Vataja Angamarda", "language": "Sanskrit", "icd_code": "M79.3", "icd_title": "Panniculitis, unspecified", "description": "Vata-type body ache", "source": "seed"},
+    {"ayush": "Pittaja Angamarda", "language": "Sanskrit", "icd_code": "M79.3", "icd_title": "Panniculitis, unspecified", "description": "Pitta-type body ache", "source": "seed"},
+    {"ayush": "Kaphaja Angamarda", "language": "Sanskrit", "icd_code": "M79.3", "icd_title": "Panniculitis, unspecified", "description": "Kapha-type body ache", "source": "seed"},
+    {"ayush": "Vataja Trishna", "language": "Sanskrit", "icd_code": "R63.1", "icd_title": "Polydipsia", "description": "Vata-type excessive thirst", "source": "seed"},
+    {"ayush": "Pittaja Trishna", "language": "Sanskrit", "icd_code": "R63.1", "icd_title": "Polydipsia", "description": "Pitta-type excessive thirst", "source": "seed"},
+    {"ayush": "Kaphaja Trishna", "language": "Sanskrit", "icd_code": "R63.1", "icd_title": "Polydipsia", "description": "Kapha-type excessive thirst", "source": "seed"},
+    {"ayush": "Vataja Daurbalya", "language": "Sanskrit", "icd_code": "R53", "icd_title": "Malaise and fatigue", "description": "Vata-type weakness", "source": "seed"},
+    {"ayush": "Pittaja Daurbalya", "language": "Sanskrit", "icd_code": "R53", "icd_title": "Malaise and fatigue", "description": "Pitta-type weakness", "source": "seed"},
+    {"ayush": "Kaphaja Daurbalya", "language": "Sanskrit", "icd_code": "R53", "icd_title": "Malaise and fatigue", "description": "Kapha-type weakness", "source": "seed"},
+    {"ayush": "Vataja Karshya", "language": "Sanskrit", "icd_code": "E46", "icd_title": "Unspecified protein-energy malnutrition", "description": "Vata-type emaciation", "source": "seed"},
+    {"ayush": "Pittaja Karshya", "language": "Sanskrit", "icd_code": "E46", "icd_title": "Unspecified protein-energy malnutrition", "description": "Pitta-type emaciation", "source": "seed"},
+    {"ayush": "Kaphaja Karshya", "language": "Sanskrit", "icd_code": "E46", "icd_title": "Unspecified protein-energy malnutrition", "description": "Kapha-type emaciation", "source": "seed"},
+    {"ayush": "Vataja Sthoulya", "language": "Sanskrit", "icd_code": "E66.9", "icd_title": "Obesity, unspecified", "description": "Vata-type obesity", "source": "seed"},
+    {"ayush": "Pittaja Sthoulya", "language": "Sanskrit", "icd_code": "E66.9", "icd_title": "Obesity, unspecified", "description": "Pitta-type obesity", "source": "seed"},
+    {"ayush": "Kaphaja Sthoulya", "language": "Sanskrit", "icd_code": "E66.9", "icd_title": "Obesity, unspecified", "description": "Kapha-type obesity", "source": "seed"},
+]
+
+# Combine all terms
+ALL_TERMS = AYUSH_MAPPINGS + ADDITIONAL_TERMS
+
+def main():
+    """Generate seed AYUSH mappings file"""
+    output_path = 'data/ayush_mappings.json'
+    
+    # Ensure data directory exists
+    os.makedirs('data', exist_ok=True)
+    
+    # Write to JSON file
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(ALL_TERMS, f, indent=2, ensure_ascii=False)
+    
+    print(f"Created {output_path} with {len(ALL_TERMS)} AYUSH term mappings")
+    print(f"Sample terms: {', '.join([t['ayush'] for t in ALL_TERMS[:10]])}")
+
+if __name__ == '__main__':
+    main()

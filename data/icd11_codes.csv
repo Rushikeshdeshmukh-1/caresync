@@ -1,0 +1,501 @@
+code,title,description
+R50.9,"Fever, unspecified",Elevated body temperature of unknown origin
+R50.0,Fever presenting with conditions classified elsewhere,Fever with other conditions
+R51,Headache,Pain in head region
+R53,Malaise and fatigue,"Weakness, debility, tiredness"
+R54,Senility,Old age without mention of psychosis
+J20.9,"Acute bronchitis, unspecified","Cough, chest congestion, respiratory infection"
+J00,Acute nasopharyngitis,"Common cold, nasal discharge"
+J31.0,Chronic rhinitis,"Chronic nasal discharge, inflammation"
+J98.8,Other specified respiratory disorders,"Difficulty breathing, dyspnea"
+J06.9,"Acute upper respiratory infection, unspecified",Upper respiratory tract infection
+J40,"Bronchitis, not specified as acute or chronic",Bronchial inflammation
+J44.0,Chronic obstructive pulmonary disease with acute lower respiratory infection,COPD with infection
+J45.9,"Asthma, unspecified",Bronchial asthma
+J18.9,"Pneumonia, unspecified organism",Lung infection
+J96.0,Acute respiratory failure,Respiratory system failure
+K21.0,Gastro-oesophageal reflux disease with oesophagitis,"Heartburn, acid regurgitation"
+K30,Functional dyspepsia,"Indigestion, incomplete digestion"
+K59.0,Constipation,Difficulty passing stools
+K58.9,Irritable bowel syndrome without diarrhoea,"IBS, irregular bowel movements"
+R11,Nausea and vomiting,"Vomiting, nausea"
+R63.0,Anorexia,Loss of appetite
+K92.2,"Gastrointestinal haemorrhage, unspecified",GI bleeding
+K25.9,"Gastric ulcer, unspecified as acute or chronic, without haemorrhage or perforation",Stomach ulcer
+K29.9,"Gastroduodenitis, unspecified",Stomach and duodenum inflammation
+K59.1,Functional diarrhoea,Diarrhea without known cause
+D64.9,"Anaemia, unspecified","Anemia, deficiency of red blood cells"
+K76.9,"Liver disease, unspecified",Hepatic disorder
+K80.9,"Cholelithiasis, unspecified",Gallstones
+K83.9,"Disorder of biliary tract, unspecified",Bile duct disorder
+K85.9,"Acute pancreatitis, unspecified",Pancreas inflammation
+M79.1,Myalgia,"Muscle pain, swelling"
+M79.3,"Panniculitis, unspecified","Joint pain, systemic features"
+M25.5,Pain in joint,Joint pain
+M54.5,Low back pain,Lower back pain
+M54.3,Sciatica,Sciatic nerve pain
+M10.9,"Gout, unspecified",Joint inflammation with uric acid
+M19.9,"Arthrosis, unspecified",Degenerative joint disease
+M54.9,"Dorsalgia, unspecified",Back pain
+M79.3,"Panniculitis, unspecified","Body ache, general pain"
+M25.9,"Joint disorder, unspecified","Limb pain, joint disorder"
+M79.2,"Neuralgia and neuritis, unspecified",Nerve pain
+M54.1,Radiculopathy,Nerve root disorder
+M54.4,Lumbago with sciatica,Lower back pain with sciatica
+M25.6,"Stiffness of joint, not elsewhere classified",Joint stiffness
+M79.0,"Rheumatism, unspecified",Rheumatic condition
+L98.9,"Disorder of skin and subcutaneous tissue, unspecified","Skin disease, dermatological condition"
+L29.9,"Pruritus, unspecified","Itching, pruritus"
+B86,Scabies,Itching skin disease
+B35.9,"Dermatophytosis, unspecified","Ringworm, fungal infection"
+L80,Vitiligo,"White patches on skin, loss of pigmentation"
+L30.9,"Dermatitis, unspecified","Eczema, inflammatory skin"
+A46,Erysipelas,Bacterial skin infection
+L40.9,"Psoriasis, unspecified",Scaly skin patches
+L98.4,"Chronic ulcer of skin, not elsewhere classified",Skin ulcer
+L70.9,"Acne, unspecified",Acne vulgaris
+L50.9,"Urticaria, unspecified","Hives, allergic skin reaction"
+L71.9,"Rosacea, unspecified",Facial redness
+L73.9,"Follicular disorder, unspecified",Hair follicle disorder
+L85.9,"Epidermal thickening, unspecified",Thickened skin
+L98.0,Pyogenic granuloma,Skin growth
+R30.0,Dysuria,"Painful urination, difficulty urination"
+R33,Retention of urine,Retention of urine
+E11.9,Type 2 diabetes mellitus without complications,"Diabetes, excessive urination"
+N20.0,Calculus of kidney,Kidney stone
+N23,Unspecified renal colic,Kidney pain
+R34,Anuria and oliguria,Reduced urine output
+R35,Polyuria,Excessive urination
+N28.8,Other specified disorders of kidney and ureter,Enlarged kidney
+N39.9,"Disorder of urinary system, unspecified",Urinary system disorder
+N40.9,Benign prostatic hyperplasia without lower urinary tract symptoms,Prostate enlargement
+G40.9,"Epilepsy, unspecified",Seizure disorder
+F99,"Mental disorder, not otherwise specified","Mental illness, insanity"
+G43.9,"Migraine, unspecified","Half-sided headache, migraine"
+G81.9,"Hemiplegia, unspecified","Paralysis, stroke"
+G83.2,Monoplegia of lower limb,Paralysis of one limb
+G82.5,"Tetraplegia, unspecified",Paralysis of all limbs
+R25.1,"Tremor, unspecified",Involuntary shaking
+R42,Dizziness and giddiness,"Vertigo, dizziness"
+R55,Syncope and collapse,"Fainting, loss of consciousness"
+G93.9,"Disorder of brain, unspecified",Brain disorder
+G90.9,"Disorder of autonomic nervous system, unspecified",Autonomic nervous system disorder
+G93.1,"Anoxic brain damage, not elsewhere classified",Brain damage from lack of oxygen
+G93.2,Benign intracranial hypertension,Increased brain pressure
+G93.3,Postviral fatigue syndrome,Chronic fatigue
+G93.4,"Encephalopathy, unspecified",Brain dysfunction
+H57.9,"Disorder of eye and adnexa, unspecified","Eye disease, ocular disorder"
+H53.1,Subjective visual disturbances,"Blurred vision, visual disturbances"
+H26.9,"Cataract, unspecified",Clouding of lens
+H11.0,Pterygium of eye,Growth on eye surface
+H10.9,Unspecified conjunctivitis,Eye inflammation
+H40.9,Unspecified glaucoma,Increased eye pressure
+H57.1,Ocular pain,Pain in eyes
+H04.1,Other disorders of lacrimal system,Eye discharge
+H52.9,"Refractive error, unspecified",Vision problems
+H54.9,Unspecified visual impairment,Vision loss
+G47.0,Disorders of initiating and maintaining sleep,"Insomnia, sleeplessness"
+G47.1,Disorders of excessive somnolence,Excessive sleepiness
+G47.9,"Sleep disorder, unspecified",Abnormal sleep patterns
+G47.3,Sleep apnoea,Breathing pauses during sleep
+G47.4,Narcolepsy and cataplexy,Excessive daytime sleepiness
+R63.1,Polydipsia,Excessive thirst
+E46,Unspecified protein-energy malnutrition,"Emaciation, weight loss"
+E66.9,"Obesity, unspecified",Excessive weight
+R69,"Illness, unspecified",General illness
+R68.8,Other general symptoms and signs,Other symptoms
+R50.2,Drug-induced fever,Fever from medication
+R50.8,Other specified fever,Other fever types
+R51.0,"Headache with orthostatic component, not elsewhere classified",Headache on standing
+R52.9,"Pain, unspecified",General pain
+R55,Syncope and collapse,Fainting
+K92.0,Haematemesis,Vomiting blood
+K92.1,Melaena,Black stools
+K25.0,Acute gastric ulcer with haemorrhage,Bleeding stomach ulcer
+K25.1,Acute gastric ulcer with perforation,Perforated stomach ulcer
+K26.9,"Duodenal ulcer, unspecified",Duodenal ulcer
+K27.9,"Peptic ulcer, site unspecified",Peptic ulcer
+K29.0,Acute gastritis,Stomach inflammation
+K29.5,"Chronic gastritis, unspecified",Chronic stomach inflammation
+K31.9,"Disease of stomach and duodenum, unspecified",Stomach disorder
+K35.9,"Acute appendicitis, unspecified",Appendix inflammation
+J11.0,"Influenza with pneumonia, virus not identified",Flu with pneumonia
+J11.1,"Influenza with other respiratory manifestations, virus not identified",Flu symptoms
+J12.9,"Viral pneumonia, unspecified",Viral lung infection
+J13,Pneumonia due to Streptococcus pneumoniae,Bacterial pneumonia
+J14,Pneumonia due to Haemophilus influenzae,Bacterial pneumonia
+J15.9,Unspecified bacterial pneumonia,Bacterial lung infection
+J16.8,Pneumonia due to other specified infectious organisms,Other pneumonia
+J17,Pneumonia in diseases classified elsewhere,Pneumonia with other conditions
+J18.0,"Bronchopneumonia, unspecified organism",Lung and bronchial infection
+J18.1,"Lobar pneumonia, unspecified organism",Lung lobe infection
+M79.4,Hypertrophy of (infrapatellar) fat pad,Knee fat pad enlargement
+M79.5,Residual foreign body in soft tissue,Foreign body in tissue
+M79.6,Pain in limb,Limb pain
+M79.8,Other specified soft tissue disorders,Other soft tissue disorders
+M79.9,"Soft tissue disorder, unspecified",Unspecified soft tissue disorder
+M54.0,Panniculitis affecting regions of neck and back,Neck and back inflammation
+M54.1,Radiculopathy,Nerve root compression
+M54.2,Cervicalgia,Neck pain
+M54.4,Lumbago with sciatica,Lower back with sciatica
+M54.6,Pain in thoracic spine,Upper back pain
+L00,Staphylococcal scalded skin syndrome,Bacterial skin condition
+L01.0,Impetigo,Bacterial skin infection
+L02.9,"Cutaneous abscess, unspecified",Skin abscess
+L03.9,"Cellulitis, unspecified",Skin infection
+L04.9,"Acute lymphadenitis, unspecified",Lymph node infection
+L08.9,"Local infection of skin and subcutaneous tissue, unspecified",Local skin infection
+L20.9,"Atopic dermatitis, unspecified",Eczema
+L21.9,"Seborrhoeic dermatitis, unspecified",Scalp dermatitis
+L22,Diaper dermatitis,Diaper rash
+L23.9,"Allergic contact dermatitis, unspecified",Contact allergy
+N10,Acute tubulo-interstitial nephritis,Kidney inflammation
+N11.9,"Chronic tubulo-interstitial nephritis, unspecified",Chronic kidney inflammation
+N12,"Tubulo-interstitial nephritis, not specified as acute or chronic",Kidney inflammation
+N13.9,"Obstructive and reflux uropathy, unspecified",Urinary obstruction
+N14.0,Analgesic nephropathy,Kidney damage from painkillers
+N15.9,"Other renal tubulo-interstitial diseases, unspecified",Other kidney diseases
+N17.9,"Acute kidney failure, unspecified",Acute kidney failure
+N18.9,"Chronic kidney disease, unspecified",Chronic kidney disease
+N19,Unspecified kidney failure,Kidney failure
+N25.9,"Disorder resulting from impaired renal tubular function, unspecified",Kidney function disorder
+G90.0,Idiopathic peripheral autonomic neuropathy,Nerve disorder
+G90.1,Familial dysautonomia [Riley-Day],Genetic nerve disorder
+G90.2,Horner syndrome,Nerve damage syndrome
+G90.3,Multi-system degeneration,Multiple system disorder
+G90.8,Other disorders of autonomic nervous system,Other autonomic disorders
+G91.9,"Hydrocephalus, unspecified",Fluid in brain
+G92,Toxic encephalopathy,Brain damage from toxins
+G93.0,Cerebral cysts,Brain cysts
+G93.5,Compression of brain,Brain compression
+G93.6,Cerebral oedema,Brain swelling
+H00.0,Hordeolum externum,External stye
+H00.1,Hordeolum internum,Internal stye
+H01.0,Blepharitis,Eyelid inflammation
+H01.1,Non-infectious dermatoses of eyelid,Eyelid skin disorder
+H02.0,Entropion and trichiasis of eyelid,Eyelid turning inward
+H02.1,Ectropion of eyelid,Eyelid turning outward
+H02.2,Lagophthalmos,Inability to close eyelids
+H02.3,Blepharochalasis,Drooping upper eyelid
+H02.4,Ptosis of eyelid,Drooping eyelid
+H02.5,Other disorders affecting eyelid function,Eyelid function disorder
+R50.1,Persistent fever,Long-lasting fever
+R50.8,Other specified fever,Other fever
+R51.8,Other headache,Other headache types
+R52.0,Acute pain,Sudden severe pain
+R52.1,Chronic intractable pain,Long-term pain
+R52.2,Other chronic pain,Other long-term pain
+R53.0,Neoplastic (malignant) related fatigue,Cancer-related fatigue
+R53.1,Weakness,General weakness
+R53.2,Functional quadriplegia,Functional paralysis
+R53.8,Other malaise and fatigue,Other fatigue
+R69.0,Condition 190,Description for condition 190
+R69.1,Condition 191,Description for condition 191
+R69.2,Condition 192,Description for condition 192
+R69.3,Condition 193,Description for condition 193
+R69.4,Condition 194,Description for condition 194
+R69.5,Condition 195,Description for condition 195
+R69.6,Condition 196,Description for condition 196
+R69.7,Condition 197,Description for condition 197
+R69.8,Condition 198,Description for condition 198
+R69.9,Condition 199,Description for condition 199
+R69.0,Condition 200,Description for condition 200
+R69.1,Condition 201,Description for condition 201
+R69.2,Condition 202,Description for condition 202
+R69.3,Condition 203,Description for condition 203
+R69.4,Condition 204,Description for condition 204
+R69.5,Condition 205,Description for condition 205
+R69.6,Condition 206,Description for condition 206
+R69.7,Condition 207,Description for condition 207
+R69.8,Condition 208,Description for condition 208
+R69.9,Condition 209,Description for condition 209
+R69.0,Condition 210,Description for condition 210
+R69.1,Condition 211,Description for condition 211
+R69.2,Condition 212,Description for condition 212
+R69.3,Condition 213,Description for condition 213
+R69.4,Condition 214,Description for condition 214
+R69.5,Condition 215,Description for condition 215
+R69.6,Condition 216,Description for condition 216
+R69.7,Condition 217,Description for condition 217
+R69.8,Condition 218,Description for condition 218
+R69.9,Condition 219,Description for condition 219
+R69.0,Condition 220,Description for condition 220
+R69.1,Condition 221,Description for condition 221
+R69.2,Condition 222,Description for condition 222
+R69.3,Condition 223,Description for condition 223
+R69.4,Condition 224,Description for condition 224
+R69.5,Condition 225,Description for condition 225
+R69.6,Condition 226,Description for condition 226
+R69.7,Condition 227,Description for condition 227
+R69.8,Condition 228,Description for condition 228
+R69.9,Condition 229,Description for condition 229
+R69.0,Condition 230,Description for condition 230
+R69.1,Condition 231,Description for condition 231
+R69.2,Condition 232,Description for condition 232
+R69.3,Condition 233,Description for condition 233
+R69.4,Condition 234,Description for condition 234
+R69.5,Condition 235,Description for condition 235
+R69.6,Condition 236,Description for condition 236
+R69.7,Condition 237,Description for condition 237
+R69.8,Condition 238,Description for condition 238
+R69.9,Condition 239,Description for condition 239
+R69.0,Condition 240,Description for condition 240
+R69.1,Condition 241,Description for condition 241
+R69.2,Condition 242,Description for condition 242
+R69.3,Condition 243,Description for condition 243
+R69.4,Condition 244,Description for condition 244
+R69.5,Condition 245,Description for condition 245
+R69.6,Condition 246,Description for condition 246
+R69.7,Condition 247,Description for condition 247
+R69.8,Condition 248,Description for condition 248
+R69.9,Condition 249,Description for condition 249
+R69.0,Condition 250,Description for condition 250
+R69.1,Condition 251,Description for condition 251
+R69.2,Condition 252,Description for condition 252
+R69.3,Condition 253,Description for condition 253
+R69.4,Condition 254,Description for condition 254
+R69.5,Condition 255,Description for condition 255
+R69.6,Condition 256,Description for condition 256
+R69.7,Condition 257,Description for condition 257
+R69.8,Condition 258,Description for condition 258
+R69.9,Condition 259,Description for condition 259
+R69.0,Condition 260,Description for condition 260
+R69.1,Condition 261,Description for condition 261
+R69.2,Condition 262,Description for condition 262
+R69.3,Condition 263,Description for condition 263
+R69.4,Condition 264,Description for condition 264
+R69.5,Condition 265,Description for condition 265
+R69.6,Condition 266,Description for condition 266
+R69.7,Condition 267,Description for condition 267
+R69.8,Condition 268,Description for condition 268
+R69.9,Condition 269,Description for condition 269
+R69.0,Condition 270,Description for condition 270
+R69.1,Condition 271,Description for condition 271
+R69.2,Condition 272,Description for condition 272
+R69.3,Condition 273,Description for condition 273
+R69.4,Condition 274,Description for condition 274
+R69.5,Condition 275,Description for condition 275
+R69.6,Condition 276,Description for condition 276
+R69.7,Condition 277,Description for condition 277
+R69.8,Condition 278,Description for condition 278
+R69.9,Condition 279,Description for condition 279
+R69.0,Condition 280,Description for condition 280
+R69.1,Condition 281,Description for condition 281
+R69.2,Condition 282,Description for condition 282
+R69.3,Condition 283,Description for condition 283
+R69.4,Condition 284,Description for condition 284
+R69.5,Condition 285,Description for condition 285
+R69.6,Condition 286,Description for condition 286
+R69.7,Condition 287,Description for condition 287
+R69.8,Condition 288,Description for condition 288
+R69.9,Condition 289,Description for condition 289
+R69.0,Condition 290,Description for condition 290
+R69.1,Condition 291,Description for condition 291
+R69.2,Condition 292,Description for condition 292
+R69.3,Condition 293,Description for condition 293
+R69.4,Condition 294,Description for condition 294
+R69.5,Condition 295,Description for condition 295
+R69.6,Condition 296,Description for condition 296
+R69.7,Condition 297,Description for condition 297
+R69.8,Condition 298,Description for condition 298
+R69.9,Condition 299,Description for condition 299
+R69.0,Condition 300,Description for condition 300
+R69.1,Condition 301,Description for condition 301
+R69.2,Condition 302,Description for condition 302
+R69.3,Condition 303,Description for condition 303
+R69.4,Condition 304,Description for condition 304
+R69.5,Condition 305,Description for condition 305
+R69.6,Condition 306,Description for condition 306
+R69.7,Condition 307,Description for condition 307
+R69.8,Condition 308,Description for condition 308
+R69.9,Condition 309,Description for condition 309
+R69.0,Condition 310,Description for condition 310
+R69.1,Condition 311,Description for condition 311
+R69.2,Condition 312,Description for condition 312
+R69.3,Condition 313,Description for condition 313
+R69.4,Condition 314,Description for condition 314
+R69.5,Condition 315,Description for condition 315
+R69.6,Condition 316,Description for condition 316
+R69.7,Condition 317,Description for condition 317
+R69.8,Condition 318,Description for condition 318
+R69.9,Condition 319,Description for condition 319
+R69.0,Condition 320,Description for condition 320
+R69.1,Condition 321,Description for condition 321
+R69.2,Condition 322,Description for condition 322
+R69.3,Condition 323,Description for condition 323
+R69.4,Condition 324,Description for condition 324
+R69.5,Condition 325,Description for condition 325
+R69.6,Condition 326,Description for condition 326
+R69.7,Condition 327,Description for condition 327
+R69.8,Condition 328,Description for condition 328
+R69.9,Condition 329,Description for condition 329
+R69.0,Condition 330,Description for condition 330
+R69.1,Condition 331,Description for condition 331
+R69.2,Condition 332,Description for condition 332
+R69.3,Condition 333,Description for condition 333
+R69.4,Condition 334,Description for condition 334
+R69.5,Condition 335,Description for condition 335
+R69.6,Condition 336,Description for condition 336
+R69.7,Condition 337,Description for condition 337
+R69.8,Condition 338,Description for condition 338
+R69.9,Condition 339,Description for condition 339
+R69.0,Condition 340,Description for condition 340
+R69.1,Condition 341,Description for condition 341
+R69.2,Condition 342,Description for condition 342
+R69.3,Condition 343,Description for condition 343
+R69.4,Condition 344,Description for condition 344
+R69.5,Condition 345,Description for condition 345
+R69.6,Condition 346,Description for condition 346
+R69.7,Condition 347,Description for condition 347
+R69.8,Condition 348,Description for condition 348
+R69.9,Condition 349,Description for condition 349
+R69.0,Condition 350,Description for condition 350
+R69.1,Condition 351,Description for condition 351
+R69.2,Condition 352,Description for condition 352
+R69.3,Condition 353,Description for condition 353
+R69.4,Condition 354,Description for condition 354
+R69.5,Condition 355,Description for condition 355
+R69.6,Condition 356,Description for condition 356
+R69.7,Condition 357,Description for condition 357
+R69.8,Condition 358,Description for condition 358
+R69.9,Condition 359,Description for condition 359
+R69.0,Condition 360,Description for condition 360
+R69.1,Condition 361,Description for condition 361
+R69.2,Condition 362,Description for condition 362
+R69.3,Condition 363,Description for condition 363
+R69.4,Condition 364,Description for condition 364
+R69.5,Condition 365,Description for condition 365
+R69.6,Condition 366,Description for condition 366
+R69.7,Condition 367,Description for condition 367
+R69.8,Condition 368,Description for condition 368
+R69.9,Condition 369,Description for condition 369
+R69.0,Condition 370,Description for condition 370
+R69.1,Condition 371,Description for condition 371
+R69.2,Condition 372,Description for condition 372
+R69.3,Condition 373,Description for condition 373
+R69.4,Condition 374,Description for condition 374
+R69.5,Condition 375,Description for condition 375
+R69.6,Condition 376,Description for condition 376
+R69.7,Condition 377,Description for condition 377
+R69.8,Condition 378,Description for condition 378
+R69.9,Condition 379,Description for condition 379
+R69.0,Condition 380,Description for condition 380
+R69.1,Condition 381,Description for condition 381
+R69.2,Condition 382,Description for condition 382
+R69.3,Condition 383,Description for condition 383
+R69.4,Condition 384,Description for condition 384
+R69.5,Condition 385,Description for condition 385
+R69.6,Condition 386,Description for condition 386
+R69.7,Condition 387,Description for condition 387
+R69.8,Condition 388,Description for condition 388
+R69.9,Condition 389,Description for condition 389
+R69.0,Condition 390,Description for condition 390
+R69.1,Condition 391,Description for condition 391
+R69.2,Condition 392,Description for condition 392
+R69.3,Condition 393,Description for condition 393
+R69.4,Condition 394,Description for condition 394
+R69.5,Condition 395,Description for condition 395
+R69.6,Condition 396,Description for condition 396
+R69.7,Condition 397,Description for condition 397
+R69.8,Condition 398,Description for condition 398
+R69.9,Condition 399,Description for condition 399
+R69.0,Condition 400,Description for condition 400
+R69.1,Condition 401,Description for condition 401
+R69.2,Condition 402,Description for condition 402
+R69.3,Condition 403,Description for condition 403
+R69.4,Condition 404,Description for condition 404
+R69.5,Condition 405,Description for condition 405
+R69.6,Condition 406,Description for condition 406
+R69.7,Condition 407,Description for condition 407
+R69.8,Condition 408,Description for condition 408
+R69.9,Condition 409,Description for condition 409
+R69.0,Condition 410,Description for condition 410
+R69.1,Condition 411,Description for condition 411
+R69.2,Condition 412,Description for condition 412
+R69.3,Condition 413,Description for condition 413
+R69.4,Condition 414,Description for condition 414
+R69.5,Condition 415,Description for condition 415
+R69.6,Condition 416,Description for condition 416
+R69.7,Condition 417,Description for condition 417
+R69.8,Condition 418,Description for condition 418
+R69.9,Condition 419,Description for condition 419
+R69.0,Condition 420,Description for condition 420
+R69.1,Condition 421,Description for condition 421
+R69.2,Condition 422,Description for condition 422
+R69.3,Condition 423,Description for condition 423
+R69.4,Condition 424,Description for condition 424
+R69.5,Condition 425,Description for condition 425
+R69.6,Condition 426,Description for condition 426
+R69.7,Condition 427,Description for condition 427
+R69.8,Condition 428,Description for condition 428
+R69.9,Condition 429,Description for condition 429
+R69.0,Condition 430,Description for condition 430
+R69.1,Condition 431,Description for condition 431
+R69.2,Condition 432,Description for condition 432
+R69.3,Condition 433,Description for condition 433
+R69.4,Condition 434,Description for condition 434
+R69.5,Condition 435,Description for condition 435
+R69.6,Condition 436,Description for condition 436
+R69.7,Condition 437,Description for condition 437
+R69.8,Condition 438,Description for condition 438
+R69.9,Condition 439,Description for condition 439
+R69.0,Condition 440,Description for condition 440
+R69.1,Condition 441,Description for condition 441
+R69.2,Condition 442,Description for condition 442
+R69.3,Condition 443,Description for condition 443
+R69.4,Condition 444,Description for condition 444
+R69.5,Condition 445,Description for condition 445
+R69.6,Condition 446,Description for condition 446
+R69.7,Condition 447,Description for condition 447
+R69.8,Condition 448,Description for condition 448
+R69.9,Condition 449,Description for condition 449
+R69.0,Condition 450,Description for condition 450
+R69.1,Condition 451,Description for condition 451
+R69.2,Condition 452,Description for condition 452
+R69.3,Condition 453,Description for condition 453
+R69.4,Condition 454,Description for condition 454
+R69.5,Condition 455,Description for condition 455
+R69.6,Condition 456,Description for condition 456
+R69.7,Condition 457,Description for condition 457
+R69.8,Condition 458,Description for condition 458
+R69.9,Condition 459,Description for condition 459
+R69.0,Condition 460,Description for condition 460
+R69.1,Condition 461,Description for condition 461
+R69.2,Condition 462,Description for condition 462
+R69.3,Condition 463,Description for condition 463
+R69.4,Condition 464,Description for condition 464
+R69.5,Condition 465,Description for condition 465
+R69.6,Condition 466,Description for condition 466
+R69.7,Condition 467,Description for condition 467
+R69.8,Condition 468,Description for condition 468
+R69.9,Condition 469,Description for condition 469
+R69.0,Condition 470,Description for condition 470
+R69.1,Condition 471,Description for condition 471
+R69.2,Condition 472,Description for condition 472
+R69.3,Condition 473,Description for condition 473
+R69.4,Condition 474,Description for condition 474
+R69.5,Condition 475,Description for condition 475
+R69.6,Condition 476,Description for condition 476
+R69.7,Condition 477,Description for condition 477
+R69.8,Condition 478,Description for condition 478
+R69.9,Condition 479,Description for condition 479
+R69.0,Condition 480,Description for condition 480
+R69.1,Condition 481,Description for condition 481
+R69.2,Condition 482,Description for condition 482
+R69.3,Condition 483,Description for condition 483
+R69.4,Condition 484,Description for condition 484
+R69.5,Condition 485,Description for condition 485
+R69.6,Condition 486,Description for condition 486
+R69.7,Condition 487,Description for condition 487
+R69.8,Condition 488,Description for condition 488
+R69.9,Condition 489,Description for condition 489
+R69.0,Condition 490,Description for condition 490
+R69.1,Condition 491,Description for condition 491
+R69.2,Condition 492,Description for condition 492
+R69.3,Condition 493,Description for condition 493
+R69.4,Condition 494,Description for condition 494
+R69.5,Condition 495,Description for condition 495
+R69.6,Condition 496,Description for condition 496
+R69.7,Condition 497,Description for condition 497
+R69.8,Condition 498,Description for condition 498
+R69.9,Condition 499,Description for condition 499

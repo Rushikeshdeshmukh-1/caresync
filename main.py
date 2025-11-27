@@ -61,7 +61,7 @@ from models.database import init_db, get_db, ClinicalRecord, MappingFeedback, Us
 # Import clinic management routes
 from routes import (
     patients, appointments, encounters, prescriptions, billing, 
-    dashboard, appointments_v2, prescriptions_v2, billing_v2, icd11
+    dashboard, appointments_v2, prescriptions_v2, billing_v2, icd11, orchestrator, copilot
 )
 
 load_dotenv()
@@ -99,6 +99,8 @@ app.include_router(appointments_v2.router)  # V2 routes
 app.include_router(prescriptions_v2.router)  # V2 routes
 app.include_router(billing_v2.router)  # V2 routes
 app.include_router(icd11.router)
+app.include_router(orchestrator.router)  # Orchestration endpoints
+app.include_router(copilot.router)       # Co-Pilot Agent endpoints
 
 # Security
 security = HTTPBearer()

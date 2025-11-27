@@ -1,36 +1,66 @@
 """
-Encounter/Visit Management API Routes with NAMASTE-ICD-11 Integration
+Encounter/Visit Management API Routes
+Simplified and Robust Implementation
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
 from datetime import datetime
-from models.database import SessionLocal, Encounter, EncounterDiagnosis, VitalSign, Patient, Staff
-from services.mapping_engine import MappingEngine
-from services.faiss_index import FaissIndex
 import uuid
 import logging
+from sqlalchemy.orm import Session
 
+from models.database import SessionLocal, Encounter, EncounterDiagnosis, VitalSign, Patient, Staff, AyushTerm
+
+# Setup logging
 logger = logging.getLogger(__name__)
+
 router = APIRouter(prefix="/api/encounters", tags=["encounters"])
 
-# Mapping engine will be initialized in main.py startup
-mapping_engine = None
+# Dependency to get DB session
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
+# --- Pydantic Models ---
 
 class EncounterCreate(BaseModel):
     patient_id: str
-    staff_id: str
+    # staff_id is optional as per frontend
+    staff_id: Optional[str] = None
+    chief_complaint: str
+    # Optional fields
     appointment_id: Optional[str] = None
     clinic_id: Optional[str] = None
     encounter_type: Optional[str] = "outpatient"
-    chief_complaint: Optional[str] = None
     history_of_present_illness: Optional[str] = None
     examination: Optional[str] = None
     assessment: Optional[str] = None
     plan: Optional[str] = None
 
+class EncounterResponse(BaseModel):
+    id: str
+    patient_id: str
+    staff_id: Optional[str]
+    chief_complaint: Optional[str]
+    status: str
+    visit_date: Optional[datetime]
+    created_at: Optional[datetime]
+    
+    # Include patient name for convenience if needed, but keeping it simple for now
+    
+    class Config:
+        orm_mode = True
+
+class DiagnosisAdd(BaseModel):
+    ayush_term: Optional[str] = None
+    icd_code: str
+    diagnosis_type: Optional[str] = "primary"
+    notes: Optional[str] = None
 
 class VitalSignCreate(BaseModel):
     temperature: Optional[float] = None
@@ -42,51 +72,44 @@ class VitalSignCreate(BaseModel):
     weight: Optional[float] = None
     height: Optional[float] = None
 
-
-class DiagnosisAdd(BaseModel):
-    ayush_term: Optional[str] = None  # NAMASTE term
-    icd_code: str  # ICD-11 code
-    diagnosis_type: Optional[str] = "primary"
-    notes: Optional[str] = None
-
+# --- Routes ---
 
 @router.get("")
 async def list_encounters(
     skip: int = 0,
     limit: int = 50,
     patient_id: Optional[str] = None,
-    staff_id: Optional[str] = None,
-    clinic_id: Optional[str] = None,
     status: Optional[str] = None,
-    token: str = "demo-token"
+    db: Session = Depends(get_db)
 ):
     """List encounters with filtering"""
     try:
-        session = SessionLocal()
-        query = session.query(Encounter)
+        query = db.query(Encounter)
         
         if patient_id:
             query = query.filter(Encounter.patient_id == patient_id)
-        if staff_id:
-            query = query.filter(Encounter.staff_id == staff_id)
-        if clinic_id:
-            query = query.filter(Encounter.clinic_id == clinic_id)
         if status:
             query = query.filter(Encounter.status == status)
         
+        # Order by most recent first
         encounters = query.order_by(Encounter.visit_date.desc()).offset(skip).limit(limit).all()
         total = query.count()
-        session.close()
         
+        # Manual serialization to avoid Pydantic recursion issues if any
         result = []
         for enc in encounters:
+            # Fetch patient name if possible, or just return IDs
+            patient_name = "Unknown"
+            if enc.patient_id:
+                patient = db.query(Patient).filter(Patient.id == enc.patient_id).first()
+                if patient:
+                    patient_name = patient.name
+
             result.append({
                 "id": enc.id,
                 "patient_id": enc.patient_id,
+                "patient_name": patient_name,
                 "staff_id": enc.staff_id,
-                "appointment_id": enc.appointment_id,
-                "clinic_id": enc.clinic_id,
-                "encounter_type": enc.encounter_type,
                 "chief_complaint": enc.chief_complaint,
                 "status": enc.status,
                 "visit_date": enc.visit_date.isoformat() if enc.visit_date else None,
@@ -103,29 +126,31 @@ async def list_encounters(
         logger.error(f"Error listing encounters: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-
 @router.post("")
-async def create_encounter(encounter: EncounterCreate, token: str = "demo-token"):
-    """Create a new patient encounter/visit"""
+async def create_encounter(encounter: EncounterCreate, db: Session = Depends(get_db)):
+    """Create a new encounter"""
     try:
-        session = SessionLocal()
-        
-        # Verify patient exists
-        patient = session.query(Patient).filter(Patient.id == encounter.patient_id).first()
+        # 1. Verify patient exists
+        patient = db.query(Patient).filter(Patient.id == encounter.patient_id).first()
         if not patient:
-            session.close()
             raise HTTPException(status_code=404, detail="Patient not found")
         
-        # Verify staff exists
-        staff = session.query(Staff).filter(Staff.id == encounter.staff_id).first()
-        if not staff:
-            session.close()
-            raise HTTPException(status_code=404, detail="Staff not found")
+        # 2. Handle staff_id
+        staff_id = encounter.staff_id
+        if not staff_id:
+            # Try to find a default staff member if none provided
+            # This is a fallback to ensure we have some staff associated if possible, 
+            # but since we made the column nullable, we can also leave it None.
+            # Let's try to assign to the first staff member found, or leave None.
+            first_staff = db.query(Staff).first()
+            if first_staff:
+                staff_id = first_staff.id
         
+        # 3. Create Encounter
         new_encounter = Encounter(
             id=str(uuid.uuid4()),
             patient_id=encounter.patient_id,
-            staff_id=encounter.staff_id,
+            staff_id=staff_id, # Can be None now
             appointment_id=encounter.appointment_id,
             clinic_id=encounter.clinic_id,
             encounter_type=encounter.encounter_type,
@@ -134,47 +159,47 @@ async def create_encounter(encounter: EncounterCreate, token: str = "demo-token"
             examination=encounter.examination,
             assessment=encounter.assessment,
             plan=encounter.plan,
-            status='in_progress'
+            status='in_progress',
+            visit_date=datetime.utcnow()
         )
         
-        session.add(new_encounter)
-        session.commit()
-        encounter_id = new_encounter.id
-        session.close()
+        db.add(new_encounter)
+        db.commit()
+        db.refresh(new_encounter)
         
-        return {"status": "success", "encounter_id": encounter_id, "message": "Encounter created successfully"}
+        return {
+            "status": "success", 
+            "encounter_id": new_encounter.id, 
+            "message": "Encounter created successfully"
+        }
     except HTTPException:
         raise
     except Exception as e:
         logger.error(f"Error creating encounter: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-
 @router.get("/{encounter_id}")
-async def get_encounter(encounter_id: str, token: str = "demo-token"):
-    """Get encounter details with diagnoses and vital signs"""
+async def get_encounter(encounter_id: str, db: Session = Depends(get_db)):
+    """Get encounter details"""
     try:
-        session = SessionLocal()
-        encounter = session.query(Encounter).filter(Encounter.id == encounter_id).first()
-        
+        encounter = db.query(Encounter).filter(Encounter.id == encounter_id).first()
         if not encounter:
-            session.close()
             raise HTTPException(status_code=404, detail="Encounter not found")
         
         # Get diagnoses
-        diagnoses = session.query(EncounterDiagnosis).filter(EncounterDiagnosis.encounter_id == encounter_id).all()
-        # Get vital signs
-        vitals = session.query(VitalSign).filter(VitalSign.encounter_id == encounter_id).order_by(VitalSign.recorded_at.desc()).all()
+        diagnoses = db.query(EncounterDiagnosis).filter(EncounterDiagnosis.encounter_id == encounter_id).all()
         
-        session.close()
+        # Get vitals
+        vitals = db.query(VitalSign).filter(VitalSign.encounter_id == encounter_id).order_by(VitalSign.recorded_at.desc()).all()
+        
+        # Get patient details
+        patient = db.query(Patient).filter(Patient.id == encounter.patient_id).first()
         
         return {
             "id": encounter.id,
             "patient_id": encounter.patient_id,
+            "patient_name": patient.name if patient else "Unknown",
             "staff_id": encounter.staff_id,
-            "appointment_id": encounter.appointment_id,
-            "clinic_id": encounter.clinic_id,
-            "encounter_type": encounter.encounter_type,
             "chief_complaint": encounter.chief_complaint,
             "history_of_present_illness": encounter.history_of_present_illness,
             "examination": encounter.examination,
@@ -211,59 +236,28 @@ async def get_encounter(encounter_id: str, token: str = "demo-token"):
         logger.error(f"Error getting encounter: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-
-@router.post("/{encounter_id}/suggest-diagnosis")
-async def suggest_diagnosis(encounter_id: str, term: str, k: int = 3, token: str = "demo-token"):
-    """Suggest ICD-11 codes for a NAMASTE term using mapping engine"""
-    try:
-        # Import mapping engine from main
-        from main import mapping_engine as main_mapping_engine
-        if main_mapping_engine is None:
-            raise HTTPException(status_code=503, detail="Mapping engine not initialized")
-        
-        # Use mapping engine to get suggestions
-        result = main_mapping_engine.suggest(term, k=k)
-        
-        return {
-            "status": "ok",
-            "encounter_id": encounter_id,
-            "term": term,
-            "suggestions": result.get('results', []),
-            "type": result.get('type', 'unknown')
-        }
-    except Exception as e:
-        logger.error(f"Error suggesting diagnosis: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
 @router.post("/{encounter_id}/diagnosis")
-async def add_diagnosis(encounter_id: str, diagnosis: DiagnosisAdd, token: str = "demo-token"):
-    """Add diagnosis to encounter with double coding (NAMASTE + ICD-11)"""
+async def add_diagnosis(encounter_id: str, diagnosis: DiagnosisAdd, db: Session = Depends(get_db)):
+    """Add diagnosis to encounter"""
     try:
-        session = SessionLocal()
-        
-        # Verify encounter exists
-        encounter = session.query(Encounter).filter(Encounter.id == encounter_id).first()
+        encounter = db.query(Encounter).filter(Encounter.id == encounter_id).first()
         if not encounter:
-            session.close()
             raise HTTPException(status_code=404, detail="Encounter not found")
-        
-        # Get or create AYUSH term if provided
-        from models.database import AyushTerm
+            
+        # Handle Ayush Term
         ayush_term_id = None
         if diagnosis.ayush_term:
-            ayush_term = session.query(AyushTerm).filter(AyushTerm.term == diagnosis.ayush_term).first()
+            ayush_term = db.query(AyushTerm).filter(AyushTerm.term == diagnosis.ayush_term).first()
             if not ayush_term:
                 ayush_term = AyushTerm(
                     id=str(uuid.uuid4()),
                     term=diagnosis.ayush_term,
                     source="user_input"
                 )
-                session.add(ayush_term)
-                session.commit()
+                db.add(ayush_term)
+                db.commit()
             ayush_term_id = ayush_term.id
-        
-        # Create diagnosis entry
+            
         new_diagnosis = EncounterDiagnosis(
             id=str(uuid.uuid4()),
             encounter_id=encounter_id,
@@ -273,38 +267,29 @@ async def add_diagnosis(encounter_id: str, diagnosis: DiagnosisAdd, token: str =
             notes=diagnosis.notes
         )
         
-        session.add(new_diagnosis)
-        session.commit()
-        diagnosis_id = new_diagnosis.id
-        session.close()
+        db.add(new_diagnosis)
+        db.commit()
         
-        return {"status": "success", "diagnosis_id": diagnosis_id, "message": "Diagnosis added successfully"}
-    except HTTPException:
-        raise
+        return {"status": "success", "diagnosis_id": new_diagnosis.id}
     except Exception as e:
         logger.error(f"Error adding diagnosis: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-
 @router.post("/{encounter_id}/vitals")
-async def record_vitals(encounter_id: str, vitals: VitalSignCreate, token: str = "demo-token"):
-    """Record vital signs for an encounter"""
+async def record_vitals(encounter_id: str, vitals: VitalSignCreate, db: Session = Depends(get_db)):
+    """Record vitals"""
     try:
-        session = SessionLocal()
-        
-        # Verify encounter exists
-        encounter = session.query(Encounter).filter(Encounter.id == encounter_id).first()
+        encounter = db.query(Encounter).filter(Encounter.id == encounter_id).first()
         if not encounter:
-            session.close()
             raise HTTPException(status_code=404, detail="Encounter not found")
-        
-        # Calculate BMI if weight and height provided
+            
+        # Calculate BMI
         bmi = None
         if vitals.weight and vitals.height:
-            height_m = vitals.height / 100  # Convert cm to meters
+            height_m = vitals.height / 100
             if height_m > 0:
                 bmi = vitals.weight / (height_m ** 2)
-        
+                
         new_vitals = VitalSign(
             id=str(uuid.uuid4()),
             encounter_id=encounter_id,
@@ -319,72 +304,30 @@ async def record_vitals(encounter_id: str, vitals: VitalSignCreate, token: str =
             bmi=bmi
         )
         
-        session.add(new_vitals)
-        session.commit()
-        vitals_id = new_vitals.id
-        session.close()
+        db.add(new_vitals)
+        db.commit()
         
-        return {"status": "success", "vitals_id": vitals_id, "message": "Vital signs recorded successfully"}
-    except HTTPException:
-        raise
+        return {"status": "success", "vitals_id": new_vitals.id}
     except Exception as e:
         logger.error(f"Error recording vitals: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-
-@router.put("/{encounter_id}")
-async def update_encounter(encounter_id: str, encounter_data: EncounterCreate, token: str = "demo-token"):
-    """Update encounter details"""
-    try:
-        session = SessionLocal()
-        encounter = session.query(Encounter).filter(Encounter.id == encounter_id).first()
-        
-        if not encounter:
-            session.close()
-            raise HTTPException(status_code=404, detail="Encounter not found")
-        
-        if encounter_data.chief_complaint is not None:
-            encounter.chief_complaint = encounter_data.chief_complaint
-        if encounter_data.history_of_present_illness is not None:
-            encounter.history_of_present_illness = encounter_data.history_of_present_illness
-        if encounter_data.examination is not None:
-            encounter.examination = encounter_data.examination
-        if encounter_data.assessment is not None:
-            encounter.assessment = encounter_data.assessment
-        if encounter_data.plan is not None:
-            encounter.plan = encounter_data.plan
-        
-        encounter.updated_at = datetime.utcnow()
-        session.commit()
-        session.close()
-        
-        return {"status": "success", "message": "Encounter updated successfully"}
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Error updating encounter: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
 @router.post("/{encounter_id}/complete")
-async def complete_encounter(encounter_id: str, token: str = "demo-token"):
+async def complete_encounter(encounter_id: str, db: Session = Depends(get_db)):
     """Mark encounter as completed"""
     try:
-        session = SessionLocal()
-        encounter = session.query(Encounter).filter(Encounter.id == encounter_id).first()
-        
+        encounter = db.query(Encounter).filter(Encounter.id == encounter_id).first()
         if not encounter:
-            session.close()
             raise HTTPException(status_code=404, detail="Encounter not found")
-        
+            
         encounter.status = 'completed'
         encounter.updated_at = datetime.utcnow()
-        session.commit()
-        session.close()
+        db.commit()
         
-        return {"status": "success", "message": "Encounter completed successfully"}
-    except HTTPException:
-        raise
+        return {"status": "success"}
     except Exception as e:
         logger.error(f"Error completing encounter: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+# Note: suggest-diagnosis endpoint removed for now to simplify. 
+# Can be re-added if needed, but should be robust.

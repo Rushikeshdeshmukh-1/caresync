@@ -190,7 +190,7 @@ class Encounter(Base):
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     patient_id = Column(String, ForeignKey('patients.id'), nullable=False)
-    staff_id = Column(String, ForeignKey('staff.id'), nullable=False)
+    staff_id = Column(String, ForeignKey('staff.id'), nullable=True)
     appointment_id = Column(String, ForeignKey('appointments.id'), nullable=True)
     clinic_id = Column(String, ForeignKey('clinics.id'), nullable=True)
     encounter_type = Column(String, default='outpatient')  # outpatient, inpatient, emergency
@@ -335,6 +335,100 @@ class Payment(Base):
     transaction_id = Column(String, nullable=True)
     notes = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# ==================== Orchestration Models ====================
+
+class OrchestratorAudit(Base):
+    """Audit log for all orchestrator actions"""
+    __tablename__ = "orchestrator_audit"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    action = Column(String, nullable=False)  # encounter_processed, mapping_suggested, claim_generated, write_blocked
+    actor = Column(String, default='orchestrator_agent')
+    encounter_id = Column(String, ForeignKey('encounters.id'), nullable=True)
+    resource_target = Column(String, nullable=True)  # Resource that was accessed/blocked
+    payload_summary = Column(JSON, nullable=True)
+    model_version = Column(String, nullable=True)
+    evidence = Column(JSON, nullable=True)
+    attempted_write = Column(Boolean, default=False)
+    status = Column(String, nullable=False)  # success, blocked, failed
+    error_message = Column(Text, nullable=True)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+
+
+class ReviewQueue(Base):
+    """Queue for items requiring human review"""
+    __tablename__ = "review_queue"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    encounter_id = Column(String, ForeignKey('encounters.id'), nullable=False)
+    reason = Column(String, nullable=False)  # low_confidence, mapping_correction, model_drift, blocked_write
+    priority = Column(String, default='normal')  # low, normal, high, critical
+    payload = Column(JSON, nullable=True)  # Full context for review
+    assigned_to = Column(String, ForeignKey('users.id'), nullable=True)
+    status = Column(String, default='open')  # open, in_progress, resolved, dismissed
+    resolution = Column(JSON, nullable=True)  # Clinician's decision
+    created_at = Column(DateTime, default=datetime.utcnow)
+    resolved_at = Column(DateTime, nullable=True)
+
+
+class ClaimPacket(Base):
+    """Insurance claim packets (preview and submitted)"""
+    __tablename__ = "claim_packets"
+    
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    encounter_id = Column(String, ForeignKey('encounters.id'), nullable=False)
+    patient_id = Column(String, ForeignKey('patients.id'), nullable=False)
+    insurer = Column(String, nullable=False)  # Insurer name/code
+    claim_json = Column(JSON, nullable=False)  # Full claim payload
+    status = Column(String, default='preview')  # preview, submitted, accepted, rejected
+    submitted_by = Column(String, ForeignKey('users.id'), nullable=True)
+    submitted_at = Column(DateTime, nullable=True)
+    response = Column(JSON, nullable=True)  # Insurer response
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class ModelMetrics(Base):
+    """Time-series model performance metrics"""
+    __tablename__ = "model_metrics"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    model_name = Column(String, nullable=False)  # mapping_engine, reranker, ner_extractor
+    model_version = Column(String, nullable=False)
+    metric_type = Column(String, nullable=False)  # acceptance_rate, avg_confidence, drift_score
+    metric_value = Column(Float, nullable=False)
+    meta_data = Column(JSON, nullable=True)  # Additional context (renamed from metadata)
+    recorded_at = Column(DateTime, default=datetime.utcnow)
+
+
+class AISuggestion(Base):
+    """AI suggestions for an encounter (read-only mapping references)"""
+    __tablename__ = "ai_suggestions"
+    
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    encounter_id = Column(String, ForeignKey('encounters.id'), nullable=False)
+    ayush_terms = Column(JSON, nullable=True)  # [{term, span_start, span_end}]
+    suggestions = Column(JSON, nullable=True)  # [{icd11, confidence, explanation}]
+    warnings = Column(JSON, nullable=True)     # [{code, severity, message}]
+    followups = Column(JSON, nullable=True)    # suggested follow-up actions
+    model_version = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class EncounterSummary(Base):
+    """Auto-generated encounter summaries"""
+    __tablename__ = "encounter_summaries"
+    
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    encounter_id = Column(String, ForeignKey('encounters.id'), nullable=False)
+    summary = Column(Text, nullable=True)
+    patient_instructions = Column(Text, nullable=True)
+    clinician_notes = Column(Text, nullable=True)
+    generated_by = Column(String, default='copilot_agent')
+    created_at = Column(DateTime, default=datetime.utcnow)
+
 
 
 def init_db():

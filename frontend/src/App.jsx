@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { LayoutDashboard, Users, Calendar, FileText, Pill, Receipt, Activity, Menu, X } from 'lucide-react'
+import { LayoutDashboard, Users, Calendar, FileText, Pill, Receipt, Activity, Menu, X, Settings } from 'lucide-react'
 import Dashboard from './pages/Dashboard'
 import Patients from './pages/Patients'
 import Appointments from './pages/Appointments'
@@ -7,6 +7,7 @@ import Encounters from './pages/Encounters'
 import Prescriptions from './pages/Prescriptions'
 import Billing from './pages/Billing'
 import Mapping from './pages/Mapping'
+import OrchestratorDashboard from './pages/OrchestratorDashboard'
 
 function App() {
     const [activeTab, setActiveTab] = useState('dashboard')
@@ -20,6 +21,7 @@ function App() {
         { id: 'prescriptions', label: 'Prescriptions', icon: Pill },
         { id: 'billing', label: 'Billing', icon: Receipt },
         { id: 'mapping', label: 'ICD-11 Mapping', icon: FileText },
+        { id: 'orchestrator', label: 'Orchestrator', icon: Settings },
     ]
 
     const renderContent = () => {
@@ -38,6 +40,8 @@ function App() {
                 return <Billing />
             case 'mapping':
                 return <Mapping />
+            case 'orchestrator':
+                return <OrchestratorDashboard />
             default:
                 return <Dashboard />
         }
@@ -74,8 +78,8 @@ function App() {
                                     if (window.innerWidth < 1024) setIsSidebarOpen(false)
                                 }}
                                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${activeTab === item.id
-                                        ? 'bg-blue-50 text-blue-700'
-                                        : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                                    ? 'bg-blue-50 text-blue-700'
+                                    : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
                                     }`}
                             >
                                 <Icon size={20} />

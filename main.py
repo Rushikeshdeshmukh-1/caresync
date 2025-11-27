@@ -61,7 +61,7 @@ from models.database import init_db, get_db, ClinicalRecord, MappingFeedback, Us
 # Import clinic management routes
 from routes import (
     patients, appointments, encounters, prescriptions, billing, 
-    dashboard, appointments_v2, prescriptions_v2, billing_v2
+    dashboard, appointments_v2, prescriptions_v2, billing_v2, icd11
 )
 
 load_dotenv()
@@ -98,6 +98,7 @@ app.include_router(dashboard.router)
 app.include_router(appointments_v2.router)  # V2 routes
 app.include_router(prescriptions_v2.router)  # V2 routes
 app.include_router(billing_v2.router)  # V2 routes
+app.include_router(icd11.router)
 
 # Security
 security = HTTPBearer()
@@ -152,8 +153,8 @@ async def startup_event():
     await terminology_service.initialize()
     await icd11_service.initialize()
     
-    # Initialize mapping engine (CSV-based, no API)
-    mapping_engine = MappingEngine(faiss_index)
+    # Initialize mapping engine (CSV-based + API fallback)
+    mapping_engine = MappingEngine(faiss_index, icd11_service)
     logger.info("Mapping engine initialized with CSV-based mapping (500 NAMASTE + 500 ICD-11 codes)")
     
     # Initialize FAISS index if available
@@ -247,8 +248,8 @@ async def suggest_icd(
     try:
         import time
         
-        # Use mapping engine for suggestions (CSV-based, no API)
-        result = mapping_engine.suggest(request.term, symptoms=request.symptoms, k=request.k)
+        # Use mapping engine for suggestions (CSV-based + API)
+        result = await mapping_engine.suggest(request.term, symptoms=request.symptoms, k=request.k)
         
         # Audit log
         await audit_service.log_access(

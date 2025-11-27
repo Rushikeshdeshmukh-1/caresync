@@ -14,6 +14,7 @@ from services.faiss_index import FaissIndex
 import csv
 
 logger = logging.getLogger(__name__)
+# Trigger reload for NAMASTE data update
 
 AYUSH_MAP_PATH = 'data/ayush_mappings.json'
 RERANKER_PATH = 'data/reranker.joblib'
@@ -25,6 +26,7 @@ class MappingEngine:
     
     def __init__(self, faiss_index: FaissIndex, icd11_service: Optional[Any] = None):
         self.faiss = faiss_index
+        self.icd11_service = icd11_service
         self.model = SentenceTransformer(MODEL_NAME)
         self.ayush_map: Dict[str, Dict] = {}
         self.icd11_map: Dict[str, Dict] = {}  # ICD-11 code lookup
@@ -53,9 +55,9 @@ class MappingEngine:
                         definition = row.get('definition', '').strip()
                         icd_code = row.get('icd11_tm2_code', '').strip()
                         
-                        # Skip if no valid ICD code
-                        if not icd_code or len(icd_code) < 2:
-                            continue
+                        # Skip if no valid ICD code - REMOVED to allow new NAMASTE terms
+                        # if not icd_code or len(icd_code) < 2:
+                        #    continue
                         
                         # Index by display name (term) - lowercase for case-insensitive search
                         if display:
@@ -152,10 +154,19 @@ class MappingEngine:
                     'source': 'namaste_csv_exact_match'
                 }
             elif icd_code:
-                # ICD code exists but not in our CSV, return what we have
+            # ICD code exists but not in our CSV, return what we have
                 return {
                     'icd_code': icd_code,
                     'icd_title': f"ICD-11 Code: {icd_code}",
+                    'ayush_term': exact.get('ayush', term),
+                    'source': 'namaste_csv_exact_match'
+                }
+            else:
+                # No ICD code (new NAMASTE term), return NAMASTE info
+                return {
+                    'icd_code': exact.get('code', 'NAMASTE'), # Use NAMASTE code as fallback
+                    'icd_title': exact.get('ayush', term),    # Use AYUSH term as title
+                    'icd_description': exact.get('definition', ''),
                     'ayush_term': exact.get('ayush', term),
                     'source': 'namaste_csv_exact_match'
                 }
@@ -310,7 +321,7 @@ class MappingEngine:
             return 0.0
         return len(words1 & words2) / len(words1)
     
-    def suggest(self, term: str, symptoms: Optional[str] = None, k: int = 3) -> Dict[str, Any]:
+    async def suggest(self, term: str, symptoms: Optional[str] = None, k: int = 3) -> Dict[str, Any]:
         """
         Main suggestion method implementing the full pipeline
         
@@ -367,6 +378,30 @@ class MappingEngine:
         # Step 3: Text-based search in ICD-11 CSV
         candidates = self.embedding_candidates(query_text, k=k * 2)  # Get more for reranking
         
+        if not candidates and self.icd11_service:
+            # Fallback to API if no local candidates
+            try:
+                api_results = await self.icd11_service.search_entities(query_text)
+                if api_results.get('destinationEntities'):
+                    for entity in api_results['destinationEntities'][:k]:
+                         # Strip HTML tags from title
+                         raw_title = entity.get('title', '')
+                         clean_title = raw_title.replace("<em class='found'>", "").replace("</em>", "")
+                         
+                         # Get code (MMS uses 'theCode')
+                         code = entity.get('theCode', '')
+                         
+                         candidates.append({
+                            'icd_code': code,
+                            'icd_title': clean_title,
+                            'icd_description': '', # MMS search often doesn't return description
+                            'distance': 0.5, 
+                            'confidence': 0.8,
+                            'provenance': {'step': 'api_fallback', 'source': 'who_icd11_api'}
+                        })
+            except Exception as e:
+                logger.error(f"API fallback error: {str(e)}")
+
         if not candidates:
             return {
                 'type': 'faiss',

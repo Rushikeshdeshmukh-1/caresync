@@ -1,0 +1,501 @@
+code,display,definition,system_description,system,who_term,icd11_tm2_code
+NAMASTE-001,Jwara,Fever,Elevated body temperature with associated symptoms,NAMASTE,Jwara,MG26
+NAMASTE-002,Santapa,Feeling of heat,Feeling of heat in the body,NAMASTE,Santapa,R50.9
+NAMASTE-003,Daha,Burning sensation,"Burning sensation, fever",NAMASTE,Daha,R50.9
+NAMASTE-004,Ushnata,Excessive heat,Excessive body heat,NAMASTE,Ushnata,R50.9
+NAMASTE-005,Atapa,Sunstroke,Heat stroke from sun exposure,NAMASTE,Atapa,T67.0
+NAMASTE-006,Kasa,Cough,Respiratory condition with persistent cough,NAMASTE,Kasa,J20.9
+NAMASTE-007,Shwasa,Dyspnea,Difficulty in breathing,NAMASTE,Shwasa,J98.8
+NAMASTE-008,Pratishyaya,Common cold,"Common cold, nasal discharge",NAMASTE,Pratishyaya,J00
+NAMASTE-009,Pinasa,Chronic rhinitis,Chronic nasal discharge,NAMASTE,Pinasa,J31.0
+NAMASTE-010,Hikka,Hiccups,Involuntary diaphragm contractions,NAMASTE,Hikka,R06.6
+NAMASTE-011,Kshavathu,Sneezing,Involuntary expulsion of air,NAMASTE,Kshavathu,R06.7
+NAMASTE-012,Urahkshata,Chest injury,Injury to chest region,NAMASTE,Urahkshata,S20.9
+NAMASTE-013,Swarabheda,Hoarseness,Loss of voice quality,NAMASTE,Swarabheda,R49.0
+NAMASTE-014,Kanthashula,Throat pain,Pain in throat region,NAMASTE,Kanthashula,R07.0
+NAMASTE-015,Shwasakashtata,Breathing difficulty,Difficulty in respiration,NAMASTE,Shwasakashtata,J98.8
+NAMASTE-016,Amlapitta,Acidity,"Heartburn, acid regurgitation",NAMASTE,Amlapitta,K21.0
+NAMASTE-017,Aruchi,Loss of appetite,"Anorexia, no desire to eat",NAMASTE,Aruchi,R63.0
+NAMASTE-018,Atisara,Diarrhea,Frequent loose or liquid stools,NAMASTE,Atisara,K59.0
+NAMASTE-019,Grahani,IBS,Irregular bowel movements,NAMASTE,Grahani,K58.9
+NAMASTE-020,Chhardi,Vomiting,Nausea and vomiting,NAMASTE,Chhardi,R11
+NAMASTE-021,Ajirna,Indigestion,Incomplete digestion,NAMASTE,Ajirna,K30
+NAMASTE-022,Vibandha,Constipation,Difficulty in passing stools,NAMASTE,Vibandha,K59.0
+NAMASTE-023,Udara,Abdominal distension,"Bloating, abdominal swelling",NAMASTE,Udara,R14
+NAMASTE-024,Gulma,Abdominal lump,Tumor or mass in abdomen,NAMASTE,Gulma,K59.0
+NAMASTE-025,Pandu,Anemia,Deficiency of red blood cells,NAMASTE,Pandu,D64.9
+NAMASTE-026,Kamala,Jaundice,Yellowing of skin and eyes,NAMASTE,Kamala,K59.0
+NAMASTE-027,Halimaka,Chronic jaundice,Long-term jaundice condition,NAMASTE,Halimaka,K59.0
+NAMASTE-028,Yakritvikara,Liver disorder,Hepatic conditions,NAMASTE,Yakritvikara,K76.9
+NAMASTE-029,Plihavriddhi,Splenomegaly,Enlarged spleen,NAMASTE,Plihavriddhi,R16.1
+NAMASTE-030,Udarshula,Abdominal pain,Pain in abdominal region,NAMASTE,Udarshula,R10.9
+NAMASTE-031,Shotha,Swelling,"Muscle pain, swelling",NAMASTE,Shotha,M79.1
+NAMASTE-032,Amavata,Rheumatoid arthritis,"Joint pain, systemic features",NAMASTE,Amavata,M79.3
+NAMASTE-033,Sandhishula,Joint pain,Pain in joints,NAMASTE,Sandhishula,M25.5
+NAMASTE-034,Katishula,Low back pain,Lower back pain,NAMASTE,Katishula,M54.5
+NAMASTE-035,Gridhrasi,Sciatica,Sciatic nerve pain,NAMASTE,Gridhrasi,M54.3
+NAMASTE-036,Vatashonita,Gout,Joint inflammation with uric acid,NAMASTE,Vatashonita,M10.9
+NAMASTE-037,Asthivata,Osteoarthritis,Degenerative joint disease,NAMASTE,Asthivata,M19.9
+NAMASTE-038,Angamarda,Body ache,General body pain,NAMASTE,Angamarda,M79.3
+NAMASTE-039,Prishtashula,Back pain,Pain in back region,NAMASTE,Prishtashula,M54.9
+NAMASTE-040,Gatravata,Limb pain,Pain in limbs,NAMASTE,Gatravata,M79.3
+NAMASTE-041,Kushtha,Skin disease,Dermatological condition,NAMASTE,Kushtha,L98.9
+NAMASTE-042,Kandu,Itching,"Pruritus, itching sensation",NAMASTE,Kandu,L29.9
+NAMASTE-043,Pama,Scabies,Itching skin disease,NAMASTE,Pama,B86
+NAMASTE-044,Dadru,Ringworm,Fungal skin infection,NAMASTE,Dadru,B35.9
+NAMASTE-045,Kilasa,Vitiligo,White patches on skin,NAMASTE,Kilasa,L80
+NAMASTE-046,Shvitra,Leukoderma,Loss of skin pigmentation,NAMASTE,Shvitra,L80
+NAMASTE-047,Vicharchika,Eczema,Inflammatory skin condition,NAMASTE,Vicharchika,L30.9
+NAMASTE-048,Visarpa,Erysipelas,Bacterial skin infection,NAMASTE,Visarpa,A46
+NAMASTE-049,Kitibha,Psoriasis,Scaly skin patches,NAMASTE,Kitibha,L40.9
+NAMASTE-050,Charmadala,Skin ulcer,Open sore on skin,NAMASTE,Charmadala,L98.4
+NAMASTE-051,Mutrakrichra,Dysuria,Painful urination,NAMASTE,Mutrakrichra,R30.0
+NAMASTE-052,Mutraghata,Retention,Retention of urine,NAMASTE,Mutraghata,R33
+NAMASTE-053,Prameha,Diabetes,Excessive urination,NAMASTE,Prameha,E11.9
+NAMASTE-054,Mutrashmari,Kidney stone,Calculus in urinary tract,NAMASTE,Mutrashmari,N20.0
+NAMASTE-055,Vrikkashula,Kidney pain,Pain in kidney region,NAMASTE,Vrikkashula,N23
+NAMASTE-056,Mutradaha,Burning urination,Burning sensation while urinating,NAMASTE,Mutradaha,R30.0
+NAMASTE-057,Mutrakshaya,Oliguria,Reduced urine output,NAMASTE,Mutrakshaya,R34
+NAMASTE-058,Mutrapravritti,Polyuria,Excessive urination,NAMASTE,Mutrapravritti,R35
+NAMASTE-059,Vrikkavriddhi,Nephromegaly,Enlarged kidney,NAMASTE,Vrikkavriddhi,N28.8
+NAMASTE-060,Mutravaha,Urinary tract,Urinary system disorder,NAMASTE,Mutravaha,N39.9
+NAMASTE-061,Apasmara,Epilepsy,Seizure disorder,NAMASTE,Apasmara,G40.9
+NAMASTE-062,Unmada,Mental disorder,"Insanity, mental illness",NAMASTE,Unmada,F99
+NAMASTE-063,Shiroshula,Headache,Pain in head,NAMASTE,Shiroshula,R51
+NAMASTE-064,Ardhavabhedaka,Migraine,Half-sided headache,NAMASTE,Ardhavabhedaka,G43.9
+NAMASTE-065,Suryavarta,Sunrise headache,Headache at sunrise,NAMASTE,Suryavarta,G43.9
+NAMASTE-066,Pakshaghata,Paralysis,"Hemiplegia, stroke",NAMASTE,Pakshaghata,G81.9
+NAMASTE-067,Ekangavata,Monoplegia,Paralysis of one limb,NAMASTE,Ekangavata,G83.2
+NAMASTE-068,Sarvangavata,Quadriplegia,Paralysis of all limbs,NAMASTE,Sarvangavata,G82.5
+NAMASTE-069,Vepathu,Tremor,Involuntary shaking,NAMASTE,Vepathu,R25.1
+NAMASTE-070,Kampa,Shaking,Trembling movement,NAMASTE,Kampa,R25.1
+NAMASTE-071,Netraroga,Eye disease,Ocular disorder,NAMASTE,Netraroga,H57.9
+NAMASTE-072,Timira,Blurred vision,Visual disturbances,NAMASTE,Timira,H53.1
+NAMASTE-073,Kacha,Cataract,Clouding of lens,NAMASTE,Kacha,H26.9
+NAMASTE-074,Patala,Pterygium,Growth on eye surface,NAMASTE,Patala,H11.0
+NAMASTE-075,Abhishyanda,Conjunctivitis,Eye inflammation,NAMASTE,Abhishyanda,H10.9
+NAMASTE-076,Adhimantha,Glaucoma,Increased eye pressure,NAMASTE,Adhimantha,H40.9
+NAMASTE-077,Netrashula,Eye pain,Pain in eyes,NAMASTE,Netrashula,H57.1
+NAMASTE-078,Netradaha,Burning eyes,Burning sensation in eyes,NAMASTE,Netradaha,H57.1
+NAMASTE-079,Netrasrava,Eye discharge,Discharge from eyes,NAMASTE,Netrasrava,H04.1
+NAMASTE-080,Netrakandu,Itchy eyes,Itching in eyes,NAMASTE,Netrakandu,H10.9
+NAMASTE-081,Anidra,Insomnia,Sleeplessness,NAMASTE,Anidra,G47.0
+NAMASTE-082,Atinidra,Excessive sleep,Hypersomnia,NAMASTE,Atinidra,G47.1
+NAMASTE-083,Nidrabhanga,Sleep disturbance,Interrupted sleep,NAMASTE,Nidrabhanga,G47.0
+NAMASTE-084,Swapnadosha,Sleep disorder,Abnormal sleep patterns,NAMASTE,Swapnadosha,G47.9
+NAMASTE-085,Nidralasya,Sleepiness,Excessive drowsiness,NAMASTE,Nidralasya,G47.1
+NAMASTE-086,Trishna,Excessive thirst,Polydipsia,NAMASTE,Trishna,R63.1
+NAMASTE-087,Daurbalya,Weakness,"Debility, fatigue",NAMASTE,Daurbalya,R53
+NAMASTE-088,Karshya,Emaciation,"Weight loss, thinness",NAMASTE,Karshya,E46
+NAMASTE-089,Sthoulya,Obesity,Excessive weight,NAMASTE,Sthoulya,E66.9
+NAMASTE-090,Mada,Intoxication,"Dizziness, confusion",NAMASTE,Mada,R42
+NAMASTE-091,Murchha,Fainting,Loss of consciousness,NAMASTE,Murchha,R55
+NAMASTE-092,Bhrama,Vertigo,"Dizziness, spinning",NAMASTE,Bhrama,R42
+NAMASTE-093,Klama,Fatigue,"Tiredness, exhaustion",NAMASTE,Klama,R53
+NAMASTE-094,Shrama,Exertion,Physical tiredness,NAMASTE,Shrama,R53
+NAMASTE-095,Alasya,Lethargy,Lack of energy,NAMASTE,Alasya,R53
+NAMASTE-096,Vataja Jwara,Vata-type Fever,Vata dosha related fever,NAMASTE,Vataja Jwara,R50.9
+NAMASTE-097,Vataja Kasa,Vata-type Cough,Vata dosha related cough,NAMASTE,Vataja Kasa,J20.9
+NAMASTE-098,Vataja Shwasa,Vata-type Dyspnea,Vata dosha related dyspnea,NAMASTE,Vataja Shwasa,J98.8
+NAMASTE-099,Vataja Atisara,Vata-type Diarrhea,Vata dosha related diarrhea,NAMASTE,Vataja Atisara,K59.0
+NAMASTE-100,Vataja Shotha,Vata-type Swelling,Vata dosha related swelling,NAMASTE,Vataja Shotha,M79.1
+NAMASTE-101,Vataja Pandu,Vata-type Anemia,Vata dosha related anemia,NAMASTE,Vataja Pandu,D64.9
+NAMASTE-102,Vataja Kamala,Vata-type Jaundice,Vata dosha related jaundice,NAMASTE,Vataja Kamala,K59.0
+NAMASTE-103,Vataja Prameha,Vata-type Diabetes,Vata dosha related diabetes,NAMASTE,Vataja Prameha,E11.9
+NAMASTE-104,Vataja Shiroshula,Vata-type Headache,Vata dosha related headache,NAMASTE,Vataja Shiroshula,R51
+NAMASTE-105,Vataja Netraroga,Vata-type Eye disease,Vata dosha related eye disease,NAMASTE,Vataja Netraroga,H57.9
+NAMASTE-106,Pittaja Jwara,Pitta-type Fever,Pitta dosha related fever,NAMASTE,Pittaja Jwara,R50.9
+NAMASTE-107,Pittaja Kasa,Pitta-type Cough,Pitta dosha related cough,NAMASTE,Pittaja Kasa,J20.9
+NAMASTE-108,Pittaja Shwasa,Pitta-type Dyspnea,Pitta dosha related dyspnea,NAMASTE,Pittaja Shwasa,J98.8
+NAMASTE-109,Pittaja Atisara,Pitta-type Diarrhea,Pitta dosha related diarrhea,NAMASTE,Pittaja Atisara,K59.0
+NAMASTE-110,Pittaja Shotha,Pitta-type Swelling,Pitta dosha related swelling,NAMASTE,Pittaja Shotha,M79.1
+NAMASTE-111,Pittaja Pandu,Pitta-type Anemia,Pitta dosha related anemia,NAMASTE,Pittaja Pandu,D64.9
+NAMASTE-112,Pittaja Kamala,Pitta-type Jaundice,Pitta dosha related jaundice,NAMASTE,Pittaja Kamala,K59.0
+NAMASTE-113,Pittaja Prameha,Pitta-type Diabetes,Pitta dosha related diabetes,NAMASTE,Pittaja Prameha,E11.9
+NAMASTE-114,Pittaja Shiroshula,Pitta-type Headache,Pitta dosha related headache,NAMASTE,Pittaja Shiroshula,R51
+NAMASTE-115,Pittaja Netraroga,Pitta-type Eye disease,Pitta dosha related eye disease,NAMASTE,Pittaja Netraroga,H57.9
+NAMASTE-116,Kaphaja Jwara,Kapha-type Fever,Kapha dosha related fever,NAMASTE,Kaphaja Jwara,R50.9
+NAMASTE-117,Kaphaja Kasa,Kapha-type Cough,Kapha dosha related cough,NAMASTE,Kaphaja Kasa,J20.9
+NAMASTE-118,Kaphaja Shwasa,Kapha-type Dyspnea,Kapha dosha related dyspnea,NAMASTE,Kaphaja Shwasa,J98.8
+NAMASTE-119,Kaphaja Atisara,Kapha-type Diarrhea,Kapha dosha related diarrhea,NAMASTE,Kaphaja Atisara,K59.0
+NAMASTE-120,Kaphaja Shotha,Kapha-type Swelling,Kapha dosha related swelling,NAMASTE,Kaphaja Shotha,M79.1
+NAMASTE-121,Kaphaja Pandu,Kapha-type Anemia,Kapha dosha related anemia,NAMASTE,Kaphaja Pandu,D64.9
+NAMASTE-122,Kaphaja Kamala,Kapha-type Jaundice,Kapha dosha related jaundice,NAMASTE,Kaphaja Kamala,K59.0
+NAMASTE-123,Kaphaja Prameha,Kapha-type Diabetes,Kapha dosha related diabetes,NAMASTE,Kaphaja Prameha,E11.9
+NAMASTE-124,Kaphaja Shiroshula,Kapha-type Headache,Kapha dosha related headache,NAMASTE,Kaphaja Shiroshula,R51
+NAMASTE-125,Kaphaja Netraroga,Kapha-type Eye disease,Kapha dosha related eye disease,NAMASTE,Kaphaja Netraroga,H57.9
+NAMASTE-126,Raktapitta,Bleeding disorder,Condition related to bleeding disorder,NAMASTE,Raktapitta,D69.9
+NAMASTE-127,Raktarsha,Bleeding piles,Condition related to bleeding piles,NAMASTE,Raktarsha,K64.9
+NAMASTE-128,Arsha,Hemorrhoids,Condition related to hemorrhoids,NAMASTE,Arsha,K64.9
+NAMASTE-129,Bhagandara,Fistula,Condition related to fistula,NAMASTE,Bhagandara,K60.4
+NAMASTE-130,Parikartika,Fissure,Condition related to fissure,NAMASTE,Parikartika,K60.2
+NAMASTE-131,Udavarta,Reverse peristalsis,Condition related to reverse peristalsis,NAMASTE,Udavarta,K59.0
+NAMASTE-132,Visuchika,Cholera,Condition related to cholera,NAMASTE,Visuchika,A00.9
+NAMASTE-133,Ajeerna,Indigestion,Condition related to indigestion,NAMASTE,Ajeerna,K30
+NAMASTE-134,Agnimandya,Low digestive fire,Condition related to low digestive fire,NAMASTE,Agnimandya,K30
+NAMASTE-135,Agnisada,Digestive weakness,Condition related to digestive weakness,NAMASTE,Agnisada,K30
+NAMASTE-136,Vibandha,Constipation,Condition related to constipation,NAMASTE,Vibandha,K59.0
+NAMASTE-137,Malabandha,Stool retention,Condition related to stool retention,NAMASTE,Malabandha,K59.0
+NAMASTE-138,Shukradosha,Semen disorder,Condition related to semen disorder,NAMASTE,Shukradosha,N50.9
+NAMASTE-139,Shukrameha,Spermatorrhea,Condition related to spermatorrhea,NAMASTE,Shukrameha,N50.8
+NAMASTE-140,Klaibya,Impotence,Condition related to impotence,NAMASTE,Klaibya,N48.4
+NAMASTE-141,Vandhyatva,Infertility,Condition related to infertility,NAMASTE,Vandhyatva,N97.9
+NAMASTE-142,Stanyadosha,Breast milk disorder,Condition related to breast milk disorder,NAMASTE,Stanyadosha,O92.7
+NAMASTE-143,Stanyakshaya,Reduced milk,Condition related to reduced milk,NAMASTE,Stanyakshaya,O92.4
+NAMASTE-144,Stanashula,Breast pain,Condition related to breast pain,NAMASTE,Stanashula,N64.5
+NAMASTE-145,Stanavriddhi,Breast enlargement,Condition related to breast enlargement,NAMASTE,Stanavriddhi,N62
+NAMASTE-146,Term-146,Condition 146,Description for condition 146,NAMASTE,Term-146,R69
+NAMASTE-147,Term-147,Condition 147,Description for condition 147,NAMASTE,Term-147,R69
+NAMASTE-148,Term-148,Condition 148,Description for condition 148,NAMASTE,Term-148,R69
+NAMASTE-149,Term-149,Condition 149,Description for condition 149,NAMASTE,Term-149,R69
+NAMASTE-150,Term-150,Condition 150,Description for condition 150,NAMASTE,Term-150,R69
+NAMASTE-151,Term-151,Condition 151,Description for condition 151,NAMASTE,Term-151,R69
+NAMASTE-152,Term-152,Condition 152,Description for condition 152,NAMASTE,Term-152,R69
+NAMASTE-153,Term-153,Condition 153,Description for condition 153,NAMASTE,Term-153,R69
+NAMASTE-154,Term-154,Condition 154,Description for condition 154,NAMASTE,Term-154,R69
+NAMASTE-155,Term-155,Condition 155,Description for condition 155,NAMASTE,Term-155,R69
+NAMASTE-156,Term-156,Condition 156,Description for condition 156,NAMASTE,Term-156,R69
+NAMASTE-157,Term-157,Condition 157,Description for condition 157,NAMASTE,Term-157,R69
+NAMASTE-158,Term-158,Condition 158,Description for condition 158,NAMASTE,Term-158,R69
+NAMASTE-159,Term-159,Condition 159,Description for condition 159,NAMASTE,Term-159,R69
+NAMASTE-160,Term-160,Condition 160,Description for condition 160,NAMASTE,Term-160,R69
+NAMASTE-161,Term-161,Condition 161,Description for condition 161,NAMASTE,Term-161,R69
+NAMASTE-162,Term-162,Condition 162,Description for condition 162,NAMASTE,Term-162,R69
+NAMASTE-163,Term-163,Condition 163,Description for condition 163,NAMASTE,Term-163,R69
+NAMASTE-164,Term-164,Condition 164,Description for condition 164,NAMASTE,Term-164,R69
+NAMASTE-165,Term-165,Condition 165,Description for condition 165,NAMASTE,Term-165,R69
+NAMASTE-166,Term-166,Condition 166,Description for condition 166,NAMASTE,Term-166,R69
+NAMASTE-167,Term-167,Condition 167,Description for condition 167,NAMASTE,Term-167,R69
+NAMASTE-168,Term-168,Condition 168,Description for condition 168,NAMASTE,Term-168,R69
+NAMASTE-169,Term-169,Condition 169,Description for condition 169,NAMASTE,Term-169,R69
+NAMASTE-170,Term-170,Condition 170,Description for condition 170,NAMASTE,Term-170,R69
+NAMASTE-171,Term-171,Condition 171,Description for condition 171,NAMASTE,Term-171,R69
+NAMASTE-172,Term-172,Condition 172,Description for condition 172,NAMASTE,Term-172,R69
+NAMASTE-173,Term-173,Condition 173,Description for condition 173,NAMASTE,Term-173,R69
+NAMASTE-174,Term-174,Condition 174,Description for condition 174,NAMASTE,Term-174,R69
+NAMASTE-175,Term-175,Condition 175,Description for condition 175,NAMASTE,Term-175,R69
+NAMASTE-176,Term-176,Condition 176,Description for condition 176,NAMASTE,Term-176,R69
+NAMASTE-177,Term-177,Condition 177,Description for condition 177,NAMASTE,Term-177,R69
+NAMASTE-178,Term-178,Condition 178,Description for condition 178,NAMASTE,Term-178,R69
+NAMASTE-179,Term-179,Condition 179,Description for condition 179,NAMASTE,Term-179,R69
+NAMASTE-180,Term-180,Condition 180,Description for condition 180,NAMASTE,Term-180,R69
+NAMASTE-181,Term-181,Condition 181,Description for condition 181,NAMASTE,Term-181,R69
+NAMASTE-182,Term-182,Condition 182,Description for condition 182,NAMASTE,Term-182,R69
+NAMASTE-183,Term-183,Condition 183,Description for condition 183,NAMASTE,Term-183,R69
+NAMASTE-184,Term-184,Condition 184,Description for condition 184,NAMASTE,Term-184,R69
+NAMASTE-185,Term-185,Condition 185,Description for condition 185,NAMASTE,Term-185,R69
+NAMASTE-186,Term-186,Condition 186,Description for condition 186,NAMASTE,Term-186,R69
+NAMASTE-187,Term-187,Condition 187,Description for condition 187,NAMASTE,Term-187,R69
+NAMASTE-188,Term-188,Condition 188,Description for condition 188,NAMASTE,Term-188,R69
+NAMASTE-189,Term-189,Condition 189,Description for condition 189,NAMASTE,Term-189,R69
+NAMASTE-190,Term-190,Condition 190,Description for condition 190,NAMASTE,Term-190,R69
+NAMASTE-191,Term-191,Condition 191,Description for condition 191,NAMASTE,Term-191,R69
+NAMASTE-192,Term-192,Condition 192,Description for condition 192,NAMASTE,Term-192,R69
+NAMASTE-193,Term-193,Condition 193,Description for condition 193,NAMASTE,Term-193,R69
+NAMASTE-194,Term-194,Condition 194,Description for condition 194,NAMASTE,Term-194,R69
+NAMASTE-195,Term-195,Condition 195,Description for condition 195,NAMASTE,Term-195,R69
+NAMASTE-196,Term-196,Condition 196,Description for condition 196,NAMASTE,Term-196,R69
+NAMASTE-197,Term-197,Condition 197,Description for condition 197,NAMASTE,Term-197,R69
+NAMASTE-198,Term-198,Condition 198,Description for condition 198,NAMASTE,Term-198,R69
+NAMASTE-199,Term-199,Condition 199,Description for condition 199,NAMASTE,Term-199,R69
+NAMASTE-200,Term-200,Condition 200,Description for condition 200,NAMASTE,Term-200,R69
+NAMASTE-201,Term-201,Condition 201,Description for condition 201,NAMASTE,Term-201,R69
+NAMASTE-202,Term-202,Condition 202,Description for condition 202,NAMASTE,Term-202,R69
+NAMASTE-203,Term-203,Condition 203,Description for condition 203,NAMASTE,Term-203,R69
+NAMASTE-204,Term-204,Condition 204,Description for condition 204,NAMASTE,Term-204,R69
+NAMASTE-205,Term-205,Condition 205,Description for condition 205,NAMASTE,Term-205,R69
+NAMASTE-206,Term-206,Condition 206,Description for condition 206,NAMASTE,Term-206,R69
+NAMASTE-207,Term-207,Condition 207,Description for condition 207,NAMASTE,Term-207,R69
+NAMASTE-208,Term-208,Condition 208,Description for condition 208,NAMASTE,Term-208,R69
+NAMASTE-209,Term-209,Condition 209,Description for condition 209,NAMASTE,Term-209,R69
+NAMASTE-210,Term-210,Condition 210,Description for condition 210,NAMASTE,Term-210,R69
+NAMASTE-211,Term-211,Condition 211,Description for condition 211,NAMASTE,Term-211,R69
+NAMASTE-212,Term-212,Condition 212,Description for condition 212,NAMASTE,Term-212,R69
+NAMASTE-213,Term-213,Condition 213,Description for condition 213,NAMASTE,Term-213,R69
+NAMASTE-214,Term-214,Condition 214,Description for condition 214,NAMASTE,Term-214,R69
+NAMASTE-215,Term-215,Condition 215,Description for condition 215,NAMASTE,Term-215,R69
+NAMASTE-216,Term-216,Condition 216,Description for condition 216,NAMASTE,Term-216,R69
+NAMASTE-217,Term-217,Condition 217,Description for condition 217,NAMASTE,Term-217,R69
+NAMASTE-218,Term-218,Condition 218,Description for condition 218,NAMASTE,Term-218,R69
+NAMASTE-219,Term-219,Condition 219,Description for condition 219,NAMASTE,Term-219,R69
+NAMASTE-220,Term-220,Condition 220,Description for condition 220,NAMASTE,Term-220,R69
+NAMASTE-221,Term-221,Condition 221,Description for condition 221,NAMASTE,Term-221,R69
+NAMASTE-222,Term-222,Condition 222,Description for condition 222,NAMASTE,Term-222,R69
+NAMASTE-223,Term-223,Condition 223,Description for condition 223,NAMASTE,Term-223,R69
+NAMASTE-224,Term-224,Condition 224,Description for condition 224,NAMASTE,Term-224,R69
+NAMASTE-225,Term-225,Condition 225,Description for condition 225,NAMASTE,Term-225,R69
+NAMASTE-226,Term-226,Condition 226,Description for condition 226,NAMASTE,Term-226,R69
+NAMASTE-227,Term-227,Condition 227,Description for condition 227,NAMASTE,Term-227,R69
+NAMASTE-228,Term-228,Condition 228,Description for condition 228,NAMASTE,Term-228,R69
+NAMASTE-229,Term-229,Condition 229,Description for condition 229,NAMASTE,Term-229,R69
+NAMASTE-230,Term-230,Condition 230,Description for condition 230,NAMASTE,Term-230,R69
+NAMASTE-231,Term-231,Condition 231,Description for condition 231,NAMASTE,Term-231,R69
+NAMASTE-232,Term-232,Condition 232,Description for condition 232,NAMASTE,Term-232,R69
+NAMASTE-233,Term-233,Condition 233,Description for condition 233,NAMASTE,Term-233,R69
+NAMASTE-234,Term-234,Condition 234,Description for condition 234,NAMASTE,Term-234,R69
+NAMASTE-235,Term-235,Condition 235,Description for condition 235,NAMASTE,Term-235,R69
+NAMASTE-236,Term-236,Condition 236,Description for condition 236,NAMASTE,Term-236,R69
+NAMASTE-237,Term-237,Condition 237,Description for condition 237,NAMASTE,Term-237,R69
+NAMASTE-238,Term-238,Condition 238,Description for condition 238,NAMASTE,Term-238,R69
+NAMASTE-239,Term-239,Condition 239,Description for condition 239,NAMASTE,Term-239,R69
+NAMASTE-240,Term-240,Condition 240,Description for condition 240,NAMASTE,Term-240,R69
+NAMASTE-241,Term-241,Condition 241,Description for condition 241,NAMASTE,Term-241,R69
+NAMASTE-242,Term-242,Condition 242,Description for condition 242,NAMASTE,Term-242,R69
+NAMASTE-243,Term-243,Condition 243,Description for condition 243,NAMASTE,Term-243,R69
+NAMASTE-244,Term-244,Condition 244,Description for condition 244,NAMASTE,Term-244,R69
+NAMASTE-245,Term-245,Condition 245,Description for condition 245,NAMASTE,Term-245,R69
+NAMASTE-246,Term-246,Condition 246,Description for condition 246,NAMASTE,Term-246,R69
+NAMASTE-247,Term-247,Condition 247,Description for condition 247,NAMASTE,Term-247,R69
+NAMASTE-248,Term-248,Condition 248,Description for condition 248,NAMASTE,Term-248,R69
+NAMASTE-249,Term-249,Condition 249,Description for condition 249,NAMASTE,Term-249,R69
+NAMASTE-250,Term-250,Condition 250,Description for condition 250,NAMASTE,Term-250,R69
+NAMASTE-251,Term-251,Condition 251,Description for condition 251,NAMASTE,Term-251,R69
+NAMASTE-252,Term-252,Condition 252,Description for condition 252,NAMASTE,Term-252,R69
+NAMASTE-253,Term-253,Condition 253,Description for condition 253,NAMASTE,Term-253,R69
+NAMASTE-254,Term-254,Condition 254,Description for condition 254,NAMASTE,Term-254,R69
+NAMASTE-255,Term-255,Condition 255,Description for condition 255,NAMASTE,Term-255,R69
+NAMASTE-256,Term-256,Condition 256,Description for condition 256,NAMASTE,Term-256,R69
+NAMASTE-257,Term-257,Condition 257,Description for condition 257,NAMASTE,Term-257,R69
+NAMASTE-258,Term-258,Condition 258,Description for condition 258,NAMASTE,Term-258,R69
+NAMASTE-259,Term-259,Condition 259,Description for condition 259,NAMASTE,Term-259,R69
+NAMASTE-260,Term-260,Condition 260,Description for condition 260,NAMASTE,Term-260,R69
+NAMASTE-261,Term-261,Condition 261,Description for condition 261,NAMASTE,Term-261,R69
+NAMASTE-262,Term-262,Condition 262,Description for condition 262,NAMASTE,Term-262,R69
+NAMASTE-263,Term-263,Condition 263,Description for condition 263,NAMASTE,Term-263,R69
+NAMASTE-264,Term-264,Condition 264,Description for condition 264,NAMASTE,Term-264,R69
+NAMASTE-265,Term-265,Condition 265,Description for condition 265,NAMASTE,Term-265,R69
+NAMASTE-266,Term-266,Condition 266,Description for condition 266,NAMASTE,Term-266,R69
+NAMASTE-267,Term-267,Condition 267,Description for condition 267,NAMASTE,Term-267,R69
+NAMASTE-268,Term-268,Condition 268,Description for condition 268,NAMASTE,Term-268,R69
+NAMASTE-269,Term-269,Condition 269,Description for condition 269,NAMASTE,Term-269,R69
+NAMASTE-270,Term-270,Condition 270,Description for condition 270,NAMASTE,Term-270,R69
+NAMASTE-271,Term-271,Condition 271,Description for condition 271,NAMASTE,Term-271,R69
+NAMASTE-272,Term-272,Condition 272,Description for condition 272,NAMASTE,Term-272,R69
+NAMASTE-273,Term-273,Condition 273,Description for condition 273,NAMASTE,Term-273,R69
+NAMASTE-274,Term-274,Condition 274,Description for condition 274,NAMASTE,Term-274,R69
+NAMASTE-275,Term-275,Condition 275,Description for condition 275,NAMASTE,Term-275,R69
+NAMASTE-276,Term-276,Condition 276,Description for condition 276,NAMASTE,Term-276,R69
+NAMASTE-277,Term-277,Condition 277,Description for condition 277,NAMASTE,Term-277,R69
+NAMASTE-278,Term-278,Condition 278,Description for condition 278,NAMASTE,Term-278,R69
+NAMASTE-279,Term-279,Condition 279,Description for condition 279,NAMASTE,Term-279,R69
+NAMASTE-280,Term-280,Condition 280,Description for condition 280,NAMASTE,Term-280,R69
+NAMASTE-281,Term-281,Condition 281,Description for condition 281,NAMASTE,Term-281,R69
+NAMASTE-282,Term-282,Condition 282,Description for condition 282,NAMASTE,Term-282,R69
+NAMASTE-283,Term-283,Condition 283,Description for condition 283,NAMASTE,Term-283,R69
+NAMASTE-284,Term-284,Condition 284,Description for condition 284,NAMASTE,Term-284,R69
+NAMASTE-285,Term-285,Condition 285,Description for condition 285,NAMASTE,Term-285,R69
+NAMASTE-286,Term-286,Condition 286,Description for condition 286,NAMASTE,Term-286,R69
+NAMASTE-287,Term-287,Condition 287,Description for condition 287,NAMASTE,Term-287,R69
+NAMASTE-288,Term-288,Condition 288,Description for condition 288,NAMASTE,Term-288,R69
+NAMASTE-289,Term-289,Condition 289,Description for condition 289,NAMASTE,Term-289,R69
+NAMASTE-290,Term-290,Condition 290,Description for condition 290,NAMASTE,Term-290,R69
+NAMASTE-291,Term-291,Condition 291,Description for condition 291,NAMASTE,Term-291,R69
+NAMASTE-292,Term-292,Condition 292,Description for condition 292,NAMASTE,Term-292,R69
+NAMASTE-293,Term-293,Condition 293,Description for condition 293,NAMASTE,Term-293,R69
+NAMASTE-294,Term-294,Condition 294,Description for condition 294,NAMASTE,Term-294,R69
+NAMASTE-295,Term-295,Condition 295,Description for condition 295,NAMASTE,Term-295,R69
+NAMASTE-296,Term-296,Condition 296,Description for condition 296,NAMASTE,Term-296,R69
+NAMASTE-297,Term-297,Condition 297,Description for condition 297,NAMASTE,Term-297,R69
+NAMASTE-298,Term-298,Condition 298,Description for condition 298,NAMASTE,Term-298,R69
+NAMASTE-299,Term-299,Condition 299,Description for condition 299,NAMASTE,Term-299,R69
+NAMASTE-300,Term-300,Condition 300,Description for condition 300,NAMASTE,Term-300,R69
+NAMASTE-301,Term-301,Condition 301,Description for condition 301,NAMASTE,Term-301,R69
+NAMASTE-302,Term-302,Condition 302,Description for condition 302,NAMASTE,Term-302,R69
+NAMASTE-303,Term-303,Condition 303,Description for condition 303,NAMASTE,Term-303,R69
+NAMASTE-304,Term-304,Condition 304,Description for condition 304,NAMASTE,Term-304,R69
+NAMASTE-305,Term-305,Condition 305,Description for condition 305,NAMASTE,Term-305,R69
+NAMASTE-306,Term-306,Condition 306,Description for condition 306,NAMASTE,Term-306,R69
+NAMASTE-307,Term-307,Condition 307,Description for condition 307,NAMASTE,Term-307,R69
+NAMASTE-308,Term-308,Condition 308,Description for condition 308,NAMASTE,Term-308,R69
+NAMASTE-309,Term-309,Condition 309,Description for condition 309,NAMASTE,Term-309,R69
+NAMASTE-310,Term-310,Condition 310,Description for condition 310,NAMASTE,Term-310,R69
+NAMASTE-311,Term-311,Condition 311,Description for condition 311,NAMASTE,Term-311,R69
+NAMASTE-312,Term-312,Condition 312,Description for condition 312,NAMASTE,Term-312,R69
+NAMASTE-313,Term-313,Condition 313,Description for condition 313,NAMASTE,Term-313,R69
+NAMASTE-314,Term-314,Condition 314,Description for condition 314,NAMASTE,Term-314,R69
+NAMASTE-315,Term-315,Condition 315,Description for condition 315,NAMASTE,Term-315,R69
+NAMASTE-316,Term-316,Condition 316,Description for condition 316,NAMASTE,Term-316,R69
+NAMASTE-317,Term-317,Condition 317,Description for condition 317,NAMASTE,Term-317,R69
+NAMASTE-318,Term-318,Condition 318,Description for condition 318,NAMASTE,Term-318,R69
+NAMASTE-319,Term-319,Condition 319,Description for condition 319,NAMASTE,Term-319,R69
+NAMASTE-320,Term-320,Condition 320,Description for condition 320,NAMASTE,Term-320,R69
+NAMASTE-321,Term-321,Condition 321,Description for condition 321,NAMASTE,Term-321,R69
+NAMASTE-322,Term-322,Condition 322,Description for condition 322,NAMASTE,Term-322,R69
+NAMASTE-323,Term-323,Condition 323,Description for condition 323,NAMASTE,Term-323,R69
+NAMASTE-324,Term-324,Condition 324,Description for condition 324,NAMASTE,Term-324,R69
+NAMASTE-325,Term-325,Condition 325,Description for condition 325,NAMASTE,Term-325,R69
+NAMASTE-326,Term-326,Condition 326,Description for condition 326,NAMASTE,Term-326,R69
+NAMASTE-327,Term-327,Condition 327,Description for condition 327,NAMASTE,Term-327,R69
+NAMASTE-328,Term-328,Condition 328,Description for condition 328,NAMASTE,Term-328,R69
+NAMASTE-329,Term-329,Condition 329,Description for condition 329,NAMASTE,Term-329,R69
+NAMASTE-330,Term-330,Condition 330,Description for condition 330,NAMASTE,Term-330,R69
+NAMASTE-331,Term-331,Condition 331,Description for condition 331,NAMASTE,Term-331,R69
+NAMASTE-332,Term-332,Condition 332,Description for condition 332,NAMASTE,Term-332,R69
+NAMASTE-333,Term-333,Condition 333,Description for condition 333,NAMASTE,Term-333,R69
+NAMASTE-334,Term-334,Condition 334,Description for condition 334,NAMASTE,Term-334,R69
+NAMASTE-335,Term-335,Condition 335,Description for condition 335,NAMASTE,Term-335,R69
+NAMASTE-336,Term-336,Condition 336,Description for condition 336,NAMASTE,Term-336,R69
+NAMASTE-337,Term-337,Condition 337,Description for condition 337,NAMASTE,Term-337,R69
+NAMASTE-338,Term-338,Condition 338,Description for condition 338,NAMASTE,Term-338,R69
+NAMASTE-339,Term-339,Condition 339,Description for condition 339,NAMASTE,Term-339,R69
+NAMASTE-340,Term-340,Condition 340,Description for condition 340,NAMASTE,Term-340,R69
+NAMASTE-341,Term-341,Condition 341,Description for condition 341,NAMASTE,Term-341,R69
+NAMASTE-342,Term-342,Condition 342,Description for condition 342,NAMASTE,Term-342,R69
+NAMASTE-343,Term-343,Condition 343,Description for condition 343,NAMASTE,Term-343,R69
+NAMASTE-344,Term-344,Condition 344,Description for condition 344,NAMASTE,Term-344,R69
+NAMASTE-345,Term-345,Condition 345,Description for condition 345,NAMASTE,Term-345,R69
+NAMASTE-346,Term-346,Condition 346,Description for condition 346,NAMASTE,Term-346,R69
+NAMASTE-347,Term-347,Condition 347,Description for condition 347,NAMASTE,Term-347,R69
+NAMASTE-348,Term-348,Condition 348,Description for condition 348,NAMASTE,Term-348,R69
+NAMASTE-349,Term-349,Condition 349,Description for condition 349,NAMASTE,Term-349,R69
+NAMASTE-350,Term-350,Condition 350,Description for condition 350,NAMASTE,Term-350,R69
+NAMASTE-351,Term-351,Condition 351,Description for condition 351,NAMASTE,Term-351,R69
+NAMASTE-352,Term-352,Condition 352,Description for condition 352,NAMASTE,Term-352,R69
+NAMASTE-353,Term-353,Condition 353,Description for condition 353,NAMASTE,Term-353,R69
+NAMASTE-354,Term-354,Condition 354,Description for condition 354,NAMASTE,Term-354,R69
+NAMASTE-355,Term-355,Condition 355,Description for condition 355,NAMASTE,Term-355,R69
+NAMASTE-356,Term-356,Condition 356,Description for condition 356,NAMASTE,Term-356,R69
+NAMASTE-357,Term-357,Condition 357,Description for condition 357,NAMASTE,Term-357,R69
+NAMASTE-358,Term-358,Condition 358,Description for condition 358,NAMASTE,Term-358,R69
+NAMASTE-359,Term-359,Condition 359,Description for condition 359,NAMASTE,Term-359,R69
+NAMASTE-360,Term-360,Condition 360,Description for condition 360,NAMASTE,Term-360,R69
+NAMASTE-361,Term-361,Condition 361,Description for condition 361,NAMASTE,Term-361,R69
+NAMASTE-362,Term-362,Condition 362,Description for condition 362,NAMASTE,Term-362,R69
+NAMASTE-363,Term-363,Condition 363,Description for condition 363,NAMASTE,Term-363,R69
+NAMASTE-364,Term-364,Condition 364,Description for condition 364,NAMASTE,Term-364,R69
+NAMASTE-365,Term-365,Condition 365,Description for condition 365,NAMASTE,Term-365,R69
+NAMASTE-366,Term-366,Condition 366,Description for condition 366,NAMASTE,Term-366,R69
+NAMASTE-367,Term-367,Condition 367,Description for condition 367,NAMASTE,Term-367,R69
+NAMASTE-368,Term-368,Condition 368,Description for condition 368,NAMASTE,Term-368,R69
+NAMASTE-369,Term-369,Condition 369,Description for condition 369,NAMASTE,Term-369,R69
+NAMASTE-370,Term-370,Condition 370,Description for condition 370,NAMASTE,Term-370,R69
+NAMASTE-371,Term-371,Condition 371,Description for condition 371,NAMASTE,Term-371,R69
+NAMASTE-372,Term-372,Condition 372,Description for condition 372,NAMASTE,Term-372,R69
+NAMASTE-373,Term-373,Condition 373,Description for condition 373,NAMASTE,Term-373,R69
+NAMASTE-374,Term-374,Condition 374,Description for condition 374,NAMASTE,Term-374,R69
+NAMASTE-375,Term-375,Condition 375,Description for condition 375,NAMASTE,Term-375,R69
+NAMASTE-376,Term-376,Condition 376,Description for condition 376,NAMASTE,Term-376,R69
+NAMASTE-377,Term-377,Condition 377,Description for condition 377,NAMASTE,Term-377,R69
+NAMASTE-378,Term-378,Condition 378,Description for condition 378,NAMASTE,Term-378,R69
+NAMASTE-379,Term-379,Condition 379,Description for condition 379,NAMASTE,Term-379,R69
+NAMASTE-380,Term-380,Condition 380,Description for condition 380,NAMASTE,Term-380,R69
+NAMASTE-381,Term-381,Condition 381,Description for condition 381,NAMASTE,Term-381,R69
+NAMASTE-382,Term-382,Condition 382,Description for condition 382,NAMASTE,Term-382,R69
+NAMASTE-383,Term-383,Condition 383,Description for condition 383,NAMASTE,Term-383,R69
+NAMASTE-384,Term-384,Condition 384,Description for condition 384,NAMASTE,Term-384,R69
+NAMASTE-385,Term-385,Condition 385,Description for condition 385,NAMASTE,Term-385,R69
+NAMASTE-386,Term-386,Condition 386,Description for condition 386,NAMASTE,Term-386,R69
+NAMASTE-387,Term-387,Condition 387,Description for condition 387,NAMASTE,Term-387,R69
+NAMASTE-388,Term-388,Condition 388,Description for condition 388,NAMASTE,Term-388,R69
+NAMASTE-389,Term-389,Condition 389,Description for condition 389,NAMASTE,Term-389,R69
+NAMASTE-390,Term-390,Condition 390,Description for condition 390,NAMASTE,Term-390,R69
+NAMASTE-391,Term-391,Condition 391,Description for condition 391,NAMASTE,Term-391,R69
+NAMASTE-392,Term-392,Condition 392,Description for condition 392,NAMASTE,Term-392,R69
+NAMASTE-393,Term-393,Condition 393,Description for condition 393,NAMASTE,Term-393,R69
+NAMASTE-394,Term-394,Condition 394,Description for condition 394,NAMASTE,Term-394,R69
+NAMASTE-395,Term-395,Condition 395,Description for condition 395,NAMASTE,Term-395,R69
+NAMASTE-396,Term-396,Condition 396,Description for condition 396,NAMASTE,Term-396,R69
+NAMASTE-397,Term-397,Condition 397,Description for condition 397,NAMASTE,Term-397,R69
+NAMASTE-398,Term-398,Condition 398,Description for condition 398,NAMASTE,Term-398,R69
+NAMASTE-399,Term-399,Condition 399,Description for condition 399,NAMASTE,Term-399,R69
+NAMASTE-400,Term-400,Condition 400,Description for condition 400,NAMASTE,Term-400,R69
+NAMASTE-401,Term-401,Condition 401,Description for condition 401,NAMASTE,Term-401,R69
+NAMASTE-402,Term-402,Condition 402,Description for condition 402,NAMASTE,Term-402,R69
+NAMASTE-403,Term-403,Condition 403,Description for condition 403,NAMASTE,Term-403,R69
+NAMASTE-404,Term-404,Condition 404,Description for condition 404,NAMASTE,Term-404,R69
+NAMASTE-405,Term-405,Condition 405,Description for condition 405,NAMASTE,Term-405,R69
+NAMASTE-406,Term-406,Condition 406,Description for condition 406,NAMASTE,Term-406,R69
+NAMASTE-407,Term-407,Condition 407,Description for condition 407,NAMASTE,Term-407,R69
+NAMASTE-408,Term-408,Condition 408,Description for condition 408,NAMASTE,Term-408,R69
+NAMASTE-409,Term-409,Condition 409,Description for condition 409,NAMASTE,Term-409,R69
+NAMASTE-410,Term-410,Condition 410,Description for condition 410,NAMASTE,Term-410,R69
+NAMASTE-411,Term-411,Condition 411,Description for condition 411,NAMASTE,Term-411,R69
+NAMASTE-412,Term-412,Condition 412,Description for condition 412,NAMASTE,Term-412,R69
+NAMASTE-413,Term-413,Condition 413,Description for condition 413,NAMASTE,Term-413,R69
+NAMASTE-414,Term-414,Condition 414,Description for condition 414,NAMASTE,Term-414,R69
+NAMASTE-415,Term-415,Condition 415,Description for condition 415,NAMASTE,Term-415,R69
+NAMASTE-416,Term-416,Condition 416,Description for condition 416,NAMASTE,Term-416,R69
+NAMASTE-417,Term-417,Condition 417,Description for condition 417,NAMASTE,Term-417,R69
+NAMASTE-418,Term-418,Condition 418,Description for condition 418,NAMASTE,Term-418,R69
+NAMASTE-419,Term-419,Condition 419,Description for condition 419,NAMASTE,Term-419,R69
+NAMASTE-420,Term-420,Condition 420,Description for condition 420,NAMASTE,Term-420,R69
+NAMASTE-421,Term-421,Condition 421,Description for condition 421,NAMASTE,Term-421,R69
+NAMASTE-422,Term-422,Condition 422,Description for condition 422,NAMASTE,Term-422,R69
+NAMASTE-423,Term-423,Condition 423,Description for condition 423,NAMASTE,Term-423,R69
+NAMASTE-424,Term-424,Condition 424,Description for condition 424,NAMASTE,Term-424,R69
+NAMASTE-425,Term-425,Condition 425,Description for condition 425,NAMASTE,Term-425,R69
+NAMASTE-426,Term-426,Condition 426,Description for condition 426,NAMASTE,Term-426,R69
+NAMASTE-427,Term-427,Condition 427,Description for condition 427,NAMASTE,Term-427,R69
+NAMASTE-428,Term-428,Condition 428,Description for condition 428,NAMASTE,Term-428,R69
+NAMASTE-429,Term-429,Condition 429,Description for condition 429,NAMASTE,Term-429,R69
+NAMASTE-430,Term-430,Condition 430,Description for condition 430,NAMASTE,Term-430,R69
+NAMASTE-431,Term-431,Condition 431,Description for condition 431,NAMASTE,Term-431,R69
+NAMASTE-432,Term-432,Condition 432,Description for condition 432,NAMASTE,Term-432,R69
+NAMASTE-433,Term-433,Condition 433,Description for condition 433,NAMASTE,Term-433,R69
+NAMASTE-434,Term-434,Condition 434,Description for condition 434,NAMASTE,Term-434,R69
+NAMASTE-435,Term-435,Condition 435,Description for condition 435,NAMASTE,Term-435,R69
+NAMASTE-436,Term-436,Condition 436,Description for condition 436,NAMASTE,Term-436,R69
+NAMASTE-437,Term-437,Condition 437,Description for condition 437,NAMASTE,Term-437,R69
+NAMASTE-438,Term-438,Condition 438,Description for condition 438,NAMASTE,Term-438,R69
+NAMASTE-439,Term-439,Condition 439,Description for condition 439,NAMASTE,Term-439,R69
+NAMASTE-440,Term-440,Condition 440,Description for condition 440,NAMASTE,Term-440,R69
+NAMASTE-441,Term-441,Condition 441,Description for condition 441,NAMASTE,Term-441,R69
+NAMASTE-442,Term-442,Condition 442,Description for condition 442,NAMASTE,Term-442,R69
+NAMASTE-443,Term-443,Condition 443,Description for condition 443,NAMASTE,Term-443,R69
+NAMASTE-444,Term-444,Condition 444,Description for condition 444,NAMASTE,Term-444,R69
+NAMASTE-445,Term-445,Condition 445,Description for condition 445,NAMASTE,Term-445,R69
+NAMASTE-446,Term-446,Condition 446,Description for condition 446,NAMASTE,Term-446,R69
+NAMASTE-447,Term-447,Condition 447,Description for condition 447,NAMASTE,Term-447,R69
+NAMASTE-448,Term-448,Condition 448,Description for condition 448,NAMASTE,Term-448,R69
+NAMASTE-449,Term-449,Condition 449,Description for condition 449,NAMASTE,Term-449,R69
+NAMASTE-450,Term-450,Condition 450,Description for condition 450,NAMASTE,Term-450,R69
+NAMASTE-451,Term-451,Condition 451,Description for condition 451,NAMASTE,Term-451,R69
+NAMASTE-452,Term-452,Condition 452,Description for condition 452,NAMASTE,Term-452,R69
+NAMASTE-453,Term-453,Condition 453,Description for condition 453,NAMASTE,Term-453,R69
+NAMASTE-454,Term-454,Condition 454,Description for condition 454,NAMASTE,Term-454,R69
+NAMASTE-455,Term-455,Condition 455,Description for condition 455,NAMASTE,Term-455,R69
+NAMASTE-456,Term-456,Condition 456,Description for condition 456,NAMASTE,Term-456,R69
+NAMASTE-457,Term-457,Condition 457,Description for condition 457,NAMASTE,Term-457,R69
+NAMASTE-458,Term-458,Condition 458,Description for condition 458,NAMASTE,Term-458,R69
+NAMASTE-459,Term-459,Condition 459,Description for condition 459,NAMASTE,Term-459,R69
+NAMASTE-460,Term-460,Condition 460,Description for condition 460,NAMASTE,Term-460,R69
+NAMASTE-461,Term-461,Condition 461,Description for condition 461,NAMASTE,Term-461,R69
+NAMASTE-462,Term-462,Condition 462,Description for condition 462,NAMASTE,Term-462,R69
+NAMASTE-463,Term-463,Condition 463,Description for condition 463,NAMASTE,Term-463,R69
+NAMASTE-464,Term-464,Condition 464,Description for condition 464,NAMASTE,Term-464,R69
+NAMASTE-465,Term-465,Condition 465,Description for condition 465,NAMASTE,Term-465,R69
+NAMASTE-466,Term-466,Condition 466,Description for condition 466,NAMASTE,Term-466,R69
+NAMASTE-467,Term-467,Condition 467,Description for condition 467,NAMASTE,Term-467,R69
+NAMASTE-468,Term-468,Condition 468,Description for condition 468,NAMASTE,Term-468,R69
+NAMASTE-469,Term-469,Condition 469,Description for condition 469,NAMASTE,Term-469,R69
+NAMASTE-470,Term-470,Condition 470,Description for condition 470,NAMASTE,Term-470,R69
+NAMASTE-471,Term-471,Condition 471,Description for condition 471,NAMASTE,Term-471,R69
+NAMASTE-472,Term-472,Condition 472,Description for condition 472,NAMASTE,Term-472,R69
+NAMASTE-473,Term-473,Condition 473,Description for condition 473,NAMASTE,Term-473,R69
+NAMASTE-474,Term-474,Condition 474,Description for condition 474,NAMASTE,Term-474,R69
+NAMASTE-475,Term-475,Condition 475,Description for condition 475,NAMASTE,Term-475,R69
+NAMASTE-476,Term-476,Condition 476,Description for condition 476,NAMASTE,Term-476,R69
+NAMASTE-477,Term-477,Condition 477,Description for condition 477,NAMASTE,Term-477,R69
+NAMASTE-478,Term-478,Condition 478,Description for condition 478,NAMASTE,Term-478,R69
+NAMASTE-479,Term-479,Condition 479,Description for condition 479,NAMASTE,Term-479,R69
+NAMASTE-480,Term-480,Condition 480,Description for condition 480,NAMASTE,Term-480,R69
+NAMASTE-481,Term-481,Condition 481,Description for condition 481,NAMASTE,Term-481,R69
+NAMASTE-482,Term-482,Condition 482,Description for condition 482,NAMASTE,Term-482,R69
+NAMASTE-483,Term-483,Condition 483,Description for condition 483,NAMASTE,Term-483,R69
+NAMASTE-484,Term-484,Condition 484,Description for condition 484,NAMASTE,Term-484,R69
+NAMASTE-485,Term-485,Condition 485,Description for condition 485,NAMASTE,Term-485,R69
+NAMASTE-486,Term-486,Condition 486,Description for condition 486,NAMASTE,Term-486,R69
+NAMASTE-487,Term-487,Condition 487,Description for condition 487,NAMASTE,Term-487,R69
+NAMASTE-488,Term-488,Condition 488,Description for condition 488,NAMASTE,Term-488,R69
+NAMASTE-489,Term-489,Condition 489,Description for condition 489,NAMASTE,Term-489,R69
+NAMASTE-490,Term-490,Condition 490,Description for condition 490,NAMASTE,Term-490,R69
+NAMASTE-491,Term-491,Condition 491,Description for condition 491,NAMASTE,Term-491,R69
+NAMASTE-492,Term-492,Condition 492,Description for condition 492,NAMASTE,Term-492,R69
+NAMASTE-493,Term-493,Condition 493,Description for condition 493,NAMASTE,Term-493,R69
+NAMASTE-494,Term-494,Condition 494,Description for condition 494,NAMASTE,Term-494,R69
+NAMASTE-495,Term-495,Condition 495,Description for condition 495,NAMASTE,Term-495,R69
+NAMASTE-496,Term-496,Condition 496,Description for condition 496,NAMASTE,Term-496,R69
+NAMASTE-497,Term-497,Condition 497,Description for condition 497,NAMASTE,Term-497,R69
+NAMASTE-498,Term-498,Condition 498,Description for condition 498,NAMASTE,Term-498,R69
+NAMASTE-499,Term-499,Condition 499,Description for condition 499,NAMASTE,Term-499,R69
+NAMASTE-500,Term-500,Condition 500,Description for condition 500,NAMASTE,Term-500,R69

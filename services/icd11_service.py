@@ -1,162 +1,99 @@
-"""
-ICD-11 Service for fetching TM2 and Biomedicine codes from local CSV data
-"""
-
-from fhir.resources.codesystem import CodeSystem, CodeSystemConcept
-from typing import List, Dict, Optional, Any
-from datetime import datetime
 import os
-import logging
-import csv
-import json
+import httpx
+import time
+from dotenv import load_dotenv
+from typing import Optional, Dict, Any
 
-logger = logging.getLogger(__name__)
-
+load_dotenv()
 
 class ICD11Service:
-    """Service for managing ICD-11 codes (TM2 and Biomedicine) using local CSV data"""
+    TOKEN_ENDPOINT = "https://icdaccessmanagement.who.int/connect/token"
+    SEARCH_ENDPOINT = "https://id.who.int/icd/release/11/2024-01/mms/search"
     
     def __init__(self):
-        self.tm2_codes: Dict[str, Dict] = {}
-        self.biomedicine_codes: Dict[str, Dict] = {}
-        self.data_dir = "data"
-        self.icd11_csv_path = os.path.join(self.data_dir, "icd11_codes.csv")
-    
-    async def initialize(self):
-        """Initialize service - load data from CSV"""
-        logger.info("Initializing ICD-11 Service (Offline Mode)...")
-        self._load_icd11_codes()
-        logger.info(f"ICD-11 service initialized - Loaded {len(self.biomedicine_codes)} codes from CSV")
-    
-    def _load_icd11_codes(self):
-        """Load ICD-11 codes from CSV"""
-        if os.path.exists(self.icd11_csv_path):
-            try:
-                with open(self.icd11_csv_path, 'r', encoding='utf-8') as f:
-                    reader = csv.DictReader(f)
-                    for row in reader:
-                        code = row.get('code', '').strip()
-                        title = row.get('title', '').strip()
-                        description = row.get('description', '').strip()
-                        
-                        if code:
-                            # Store in biomedicine codes (assuming most are biomedicine for now)
-                            # In a real scenario, we might distinguish TM2 if the CSV has a type column
-                            # For now, we'll put them in biomedicine_codes as the main lookup
-                            self.biomedicine_codes[code] = {
-                                "code": code,
-                                "display": title,
-                                "definition": description,
-                                "system": "http://id.who.int/icd/release/11/mms/release/icd11Mms",
-                                "foundation_uri": f"http://id.who.int/icd/entity/{code}" # Placeholder URI
-                            }
-                            
-                            # Also populate TM2 codes if they look like TM codes (heuristic)
-                            if code.startswith("TM") or "Traditional Medicine" in title:
-                                self.tm2_codes[code] = self.biomedicine_codes[code]
-                                
-            except Exception as e:
-                logger.error(f"Error loading ICD-11 codes from CSV: {str(e)}")
-        else:
-            logger.warning(f"ICD-11 CSV not found at {self.icd11_csv_path}")
+        self.client_id = os.getenv("ICD11_CLIENT_ID")
+        self.client_secret = os.getenv("ICD11_CLIENT_SECRET")
+        self.token: Optional[str] = None
+        self.token_expiry: float = 0
 
-    async def get_tm2_codesystem(self) -> CodeSystem:
-        """Generate FHIR CodeSystem for ICD-11 TM2"""
-        concepts = []
-        for code, data in self.tm2_codes.items():
-            concept = CodeSystemConcept(
-                code=code,
-                display=data["display"],
-                definition=data.get("definition")
-            )
-            concepts.append(concept)
-        
-        codesystem = CodeSystem(
-            id="icd11-tm2",
-            url="http://id.who.int/icd/release/11/mms/release/icd11Mms",
-            version="2024-01",
-            name="ICD11TM2",
-            title="ICD-11 Traditional Medicine Module 2",
-            status="active",
-            experimental=False,
-            date=datetime.utcnow().isoformat(),
-            publisher="World Health Organization",
-            description="ICD-11 Traditional Medicine Module 2 codes",
-            caseSensitive=True,
-            content="complete",
-            concept=concepts
-        )
-        
-        return codesystem
-    
-    async def get_biomedicine_codesystem(self) -> CodeSystem:
-        """Generate FHIR CodeSystem for ICD-11 Biomedicine"""
-        concepts = []
-        # Limit to first 1000 to avoid huge payload if list is large
-        count = 0
-        for code, data in self.biomedicine_codes.items():
-            concept = CodeSystemConcept(
-                code=code,
-                display=data["display"],
-                definition=data.get("definition")
-            )
-            concepts.append(concept)
-            count += 1
-            if count >= 1000:
-                break
-        
-        codesystem = CodeSystem(
-            id="icd11-biomedicine",
-            url="http://id.who.int/icd/release/11/mms/release/icd11Mms",
-            version="2024-01",
-            name="ICD11Biomedicine",
-            title="ICD-11 Biomedicine",
-            status="active",
-            experimental=False,
-            date=datetime.utcnow().isoformat(),
-            publisher="World Health Organization",
-            description="ICD-11 Biomedicine codes",
-            caseSensitive=True,
-            content="complete",
-            concept=concepts
-        )
-        
-        return codesystem
-    
-    async def get_biomedicine_code(self, code: str) -> Dict[str, Any]:
-        """Get specific ICD-11 Biomedicine code from local data"""
-        if code in self.biomedicine_codes:
-            return self.biomedicine_codes[code]
-        else:
-            raise ValueError(f"ICD-11 code {code} not found in local data")
-    
-    async def search_biomedicine(self, query: str, limit: int = 20) -> List[Dict[str, Any]]:
-        """Search ICD-11 Biomedicine codes from local data"""
-        results = []
-        query_lower = query.lower()
-        
-        for code, data in self.biomedicine_codes.items():
-            if query_lower in data["display"].lower() or query_lower in data.get("definition", "").lower() or query_lower in code.lower():
-                results.append(data)
-                if len(results) >= limit:
-                    break
-        
-        logger.info(f"Found {len(results)} ICD-11 codes locally for query: {query}")
-        return results
-    
-    async def search_icd11_by_term(self, term: str, limit: int = 10) -> List[Dict[str, Any]]:
+    async def initialize(self):
         """
-        Search ICD-11 codes (both TM2 and Biomedicine) by term
+        Initialize the service.
         """
-        # Reuse search_biomedicine as it searches all loaded codes
-        return await self.search_biomedicine(term, limit)
-    
-    async def get_tm2_code(self, code: str) -> Dict[str, Any]:
-        """Get specific ICD-11 TM2 code"""
-        if code in self.tm2_codes:
-            return self.tm2_codes[code]
-        elif code in self.biomedicine_codes:
-             # Fallback if it's in the main list but not tagged as TM2
-             return self.biomedicine_codes[code]
-        else:
-            raise ValueError(f"ICD-11 TM2 code {code} not found")
+        print("ICD11Service initialized.")
+
+    async def get_token(self) -> str:
+        """
+        Retrieves an OAuth2 access token.
+        Reuse the token if it's still valid.
+        """
+        if self.token and time.time() < self.token_expiry:
+            return self.token
+
+        if not self.client_id or not self.client_secret:
+            raise ValueError("ICD11_CLIENT_ID and ICD11_CLIENT_SECRET must be set in .env")
+
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                self.TOKEN_ENDPOINT,
+                data={"grant_type": "client_credentials", "scope": "icdapi_access"},
+                auth=(self.client_id, self.client_secret),
+                timeout=10.0
+            )
+            response.raise_for_status()
+            data = response.json()
+            self.token = data["access_token"]
+            # Set expiry a bit earlier than actual to be safe (e.g., -60 seconds)
+            self.token_expiry = time.time() + data["expires_in"] - 60
+            return self.token
+
+    async def search_entities(self, query: str) -> Dict[str, Any]:
+        """
+        Search for ICD-11 entities by query string.
+        """
+        token = await self.get_token()
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "API-Version": "v2",
+            "Accept-Language": "en"
+        }
+        
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                self.SEARCH_ENDPOINT,
+                params={"q": query, "useKl": "true"}, # useKl=true for better results in some contexts, or remove if standard search
+                headers=headers,
+                timeout=10.0
+            )
+            response.raise_for_status()
+            return response.json()
+
+    async def get_entity(self, entity_id: str) -> Dict[str, Any]:
+        """
+        Retrieve details for a specific entity by its URI or ID.
+        Note: entity_id should be the full URI or the specific ID part if the API supports it.
+        The search result usually provides the URI.
+        """
+        token = await self.get_token()
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "API-Version": "v2",
+            "Accept-Language": "en"
+        }
+        
+        # If entity_id is not a full URL, construct it (assuming it's an ID)
+        # However, search results give full URIs like http://id.who.int/icd/entity/12345
+        url = entity_id if entity_id.startswith("http") else f"https://id.who.int/icd/entity/{entity_id}"
+
+        # Ensure HTTPS
+        if url.startswith("http://"):
+            url = url.replace("http://", "https://", 1)
+
+        async with httpx.AsyncClient(follow_redirects=True) as client:
+            response = await client.get(
+                url,
+                headers=headers,
+                timeout=10.0
+            )
+            response.raise_for_status()
+            return response.json()

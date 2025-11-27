@@ -1,38 +1,38 @@
 code,title,short_description
-R50.9,Fever unspecified,Elevated body temperature of unknown origin
-J20.9,Acute bronchitis unspecified,Cough chest congestion respiratory infection
-J98.8,Other specified respiratory disorders,Difficulty breathing dyspnea
-J00,Acute nasopharyngitis,Common cold nasal discharge
-J31.0,Chronic rhinitis,Chronic nasal discharge inflammation
-K21.0,Gastro-oesophageal reflux disease,Heartburn acid regurgitation
-R63.0,Anorexia,Loss of appetite
-K59.0,Constipation,Difficulty passing stools
-K58.9,Irritable bowel syndrome,Irregular bowel movements digestive disorder
-R11,Nausea and vomiting,Vomiting nausea
-K30,Functional dyspepsia,Indigestion incomplete digestion
-M79.1,Myalgia,Muscle pain swelling
-M79.3,Panniculitis unspecified,Joint pain systemic features
-M25.5,Pain in joint,Joint pain
-M54.5,Low back pain,Lower back pain
-M54.3,Sciatica,Sciatic nerve pain
-L98.9,Disorder of skin and subcutaneous tissue unspecified,Skin disease dermatological condition
-L29.9,Pruritus unspecified,Itching pruritus
-B86,Scabies,Scabies itching skin
-D64.9,Anaemia unspecified,Anemia pallor
-R30.0,Dysuria,Painful urination difficulty urination
-R33,Retention of urine,Retention of urine
-E11.9,Type 2 diabetes mellitus,Diabetes excessive urination
-G40.9,Epilepsy unspecified,Epilepsy seizures
-F99,Mental disorder not otherwise specified,Mental disorder insanity
-R51,Headache,Headache
-G43.9,Migraine unspecified,Migraine half-sided headache
-H57.9,Disorder of eye and adnexa unspecified,Eye disease
-H53.1,Subjective visual disturbances,Blurred vision visual disturbances
-G47.0,Disorders of initiating and maintaining sleep,Insomnia sleeplessness
-G47.1,Disorders of excessive somnolence,Excessive sleepiness
-R14,Flatulence and related conditions,Abdominal distension bloating
-R06.6,Hiccough,Hiccups
-R63.1,Polydipsia,Excessive thirst
-R53,Malaise and fatigue,Weakness debility
-E46,Unspecified protein-energy malnutrition,Emaciation weight loss
-E66.9,Obesity unspecified,Obesity excessive weight
+ME01,Fever of unknown origin,Fever of unknown origin
+RA02.0,Acute cough,Acute cough
+RA03,Dyspnoea,Dyspnoea
+CA20.0,Acute nasopharyngitis,Acute nasopharyngitis
+CA20.1,Chronic rhinitis,Chronic rhinitis
+DA63,Gastro-esophageal reflux disease,Gastro-esophageal reflux disease
+DA02,Functional dyspepsia,Functional dyspepsia
+MD10,Vomiting,Vomiting
+1A00.Z,Acute infectious diarrhoea,Acute infectious diarrhoea
+DA54.Z,Irritable bowel syndrome,Irritable bowel syndrome
+DA61,Constipation,Constipation
+DA90,Abdominal distension,Abdominal distension
+2B90.Z,Abdominal mass,Abdominal mass
+MA20.0,Dysuria,Dysuria
+MA20.2,Urinary retention,Urinary retention
+5A11,Type 2 Diabetes,Type 2 Diabetes
+MG30.0,Localized swelling,Localized swelling
+FA20,Rheumatoid arthritis,Rheumatoid arthritis
+MG30.3,Joint pain,Joint pain
+ME84,Low back pain,Low back pain
+ME84.1,Sciatica,Sciatica
+EA90.Z,Skin disease,Skin disease
+EA02,Pruritus,Pruritus
+1F40,Scabies,Scabies
+D50.Z,"Anemia, unspecified","Anemia, unspecified"
+DB90,Jaundice,Jaundice
+8A60.Z,Epilepsy,Epilepsy
+MB26.Z,Unspecified mental disorder,Unspecified mental disorder
+8A80,Headache disorder,Headache disorder
+8A80.0,Migraine,Migraine
+9B90.Z,Eye disease,Eye disease
+9B61,Visual disturbance,Visual disturbance
+MB20.0,Insomnia,Insomnia
+MB20.1,Hypersomnia,Hypersomnia
+MG22,Fatigue,Fatigue
+5B54,Severe underweight,Severe underweight
+5B81,Obesity,Obesity

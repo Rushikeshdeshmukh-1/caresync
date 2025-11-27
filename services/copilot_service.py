@@ -188,18 +188,138 @@ class CoPilotService:
 
     async def chat(self, db: Session, encounter_id: str, message: str, context: Dict[str, Any]) -> str:
         """
-        Simple chat interface (placeholder for LLM).
+        Smart chat interface using Local LLM (Ollama) with RAG and ICD-11 API.
         """
-        # In a real implementation, this would call an LLM with RAG
-        response = f"I understand you're asking about '{message}'. Based on the encounter context, I recommend reviewing the suggested ICD-11 codes. (This is a placeholder response)."
+        import httpx
+        from services.icd11_api import ICD11API
+        from services.copilot_rag import CoPilotRAG
         
+        # Initialize helpers (lazy load or singleton in real app, here locally)
+        icd_api = ICD11API()
+        rag = CoPilotRAG() # Will load existing index
+        
+        # Prepare context for LLM
+        notes = context.get('notes', '')
+        meds = context.get('meds', [])
+        conditions = context.get('comorbidities', [])
+        
+        # 1. RAG Search (Ayurvedic Knowledge)
+        rag_context = ""
+        rag_results = rag.search(message, k=2)
+        if rag_results:
+            rag_texts = [f"- {r['text']}" for r in rag_results]
+            rag_context = "\nRelevant Ayurvedic Knowledge:\n" + "\n".join(rag_texts)
+            
+        # 2. ICD-11 API Search (if asked)
+        icd_context = ""
+        if "code" in message.lower() or "icd" in message.lower():
+            icd_results = await icd_api.search(message)
+            if icd_results:
+                icd_texts = [f"- {r['code']}: {r['title']} ({r['url']})" for r in icd_results]
+                icd_context = "\nICD-11 Search Results:\n" + "\n".join(icd_texts)
+        
+        system_prompt = f"""You are an AI clinical assistant supporting a doctor in an AYUSH clinic.
+        
+        CONTEXT:
+        - Clinical Notes: {notes}
+        - Medications: {', '.join(meds) if meds else 'None'}
+        - Conditions: {', '.join(conditions) if conditions else 'None'}
+        {rag_context}
+        {icd_context}
+        
+        INSTRUCTIONS:
+        - Answer the user's question DIRECTLY based on the context and provided knowledge.
+        - Use a professional, structured format (bullet points or short paragraphs).
+        - DO NOT generate "Question:" or "Answer:" labels.
+        - DO NOT hallucinate information not in the context.
+        - If the information is missing, state "Not specified in the records."
+        """
+
+        try:
+            # Try calling Ollama
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                response = await client.post(
+                    "http://localhost:11434/api/chat",
+                    json={
+                        "model": "gemma:2b",
+                        "messages": [
+                            {"role": "system", "content": system_prompt},
+                            {"role": "user", "content": message}
+                        ],
+                        "options": {
+                            "temperature": 0.3
+                        },
+                        "stream": False
+                    }
+                )
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    llm_response = data.get('message', {}).get('content', '')
+                    if llm_response:
+                        audit_log(
+                            action="copilot_chat",
+                            actor="clinician",
+                            encounter_id=encounter_id,
+                            resource_target="chat",
+                            status="success",
+                            payload_summary={"source": "ollama/gemma:2b", "rag_hits": len(rag_results)}
+                        )
+                        return llm_response
+
+        except Exception as e:
+            logger.warning(f"Ollama LLM failed, falling back to rule-based: {e}")
+
+        # --- Fallback to Rule-Based Logic ---
+        # (Keep existing fallback logic)
+        message_lower = message.lower()
+        response = ""
+        
+        # 1. Check for AYUSH terms in the message
+        extracted_terms = self._extract_ayush_terms(message)
+        if extracted_terms:
+            term_responses = []
+            for item in extracted_terms:
+                term = item['term']
+                result = await self.mapping_engine.suggest(term)
+                candidates = result.get('results', [])
+                if candidates:
+                    top_cand = candidates[0]
+                    term_responses.append(f"For **{term}**, the top ICD-11 mapping is **{top_cand['icd_code']}** ({top_cand['icd_title']}).")
+                else:
+                    term_responses.append(f"I recognized **{term}** but couldn't find a direct ICD-11 mapping.")
+            response = " ".join(term_responses)
+
+        # 2. Check for intent keywords
+        elif "treatment" in message_lower or "medicine" in message_lower:
+            response = "I cannot prescribe medications directly. However, based on the symptoms, consider reviewing standard treatment protocols for the identified conditions. Please check for any contraindications with current medications."
+            
+        elif "contraindication" in message_lower or "safety" in message_lower:
+            # Re-run safety check on context
+            warnings = self._check_safety(context, [])
+            if warnings:
+                warning_texts = [f"- {w['message']}" for w in warnings]
+                response = "I found the following potential safety issues:\n" + "\n".join(warning_texts)
+            else:
+                response = "I didn't detect any specific contraindications based on the current patient context and medications."
+
+        elif "summary" in message_lower:
+            if notes:
+                response = f"Here is a brief summary of the notes so far: The patient presents with symptoms described as '{notes[:50]}...'."
+            else:
+                response = "The clinical notes are currently empty."
+
+        # 3. Fallback
+        if not response:
+            response = "I'm listening. You can ask me about specific AYUSH terms, potential contraindications, or for a summary of the current notes. (LLM is currently unavailable)"
+
         audit_log(
             action="copilot_chat",
             actor="clinician",
             encounter_id=encounter_id,
             resource_target="chat",
             status="success",
-            payload_summary={"message_length": len(message)}
+            payload_summary={"source": "rule-based", "message_length": len(message), "response_length": len(response)}
         )
         
         return response

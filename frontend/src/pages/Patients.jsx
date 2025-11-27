@@ -48,6 +48,30 @@ export default function Patients() {
         }
     }
 
+    const [historyModalOpen, setHistoryModalOpen] = useState(false)
+    const [selectedPatient, setSelectedPatient] = useState(null)
+    const [patientHistory, setPatientHistory] = useState([])
+    const [historyLoading, setHistoryLoading] = useState(false)
+
+    const handleViewHistory = async (patient) => {
+        setSelectedPatient(patient)
+        setHistoryModalOpen(true)
+        setHistoryLoading(true)
+        try {
+            const response = await fetch(`/api/encounters?patient_id=${patient.id}`)
+            if (response.ok) {
+                const data = await response.json()
+                setPatientHistory(data.encounters || [])
+            } else {
+                console.error('Failed to fetch history')
+            }
+        } catch (error) {
+            console.error('Error fetching history:', error)
+        } finally {
+            setHistoryLoading(false)
+        }
+    }
+
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
@@ -138,6 +162,72 @@ export default function Patients() {
                 </div>
             )}
 
+            {historyModalOpen && selectedPatient && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+                    <div className="bg-white rounded-xl p-6 w-full max-w-2xl shadow-2xl max-h-[80vh] flex flex-col">
+                        <div className="flex justify-between items-center mb-6">
+                            <div>
+                                <h2 className="text-xl font-bold text-gray-900">Patient History</h2>
+                                <p className="text-sm text-gray-500">{selectedPatient.name} (Age: {selectedPatient.age})</p>
+                            </div>
+                            <button
+                                onClick={() => setHistoryModalOpen(false)}
+                                className="text-gray-400 hover:text-gray-600"
+                            >
+                                <span className="text-2xl">&times;</span>
+                            </button>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto">
+                            {historyLoading ? (
+                                <div className="text-center py-10">
+                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+                                    <p className="mt-2 text-gray-500">Loading history...</p>
+                                </div>
+                            ) : patientHistory.length === 0 ? (
+                                <div className="text-center py-10 bg-gray-50 rounded-lg border border-gray-100">
+                                    <p className="text-gray-500">No previous encounters found for this patient.</p>
+                                </div>
+                            ) : (
+                                <div className="space-y-4">
+                                    {patientHistory.map(encounter => (
+                                        <div key={encounter.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                                            <div className="flex justify-between items-start mb-2">
+                                                <div>
+                                                    <span className="text-sm font-bold text-blue-600">
+                                                        {new Date(encounter.visit_date).toLocaleDateString()}
+                                                    </span>
+                                                    <span className="mx-2 text-gray-300">|</span>
+                                                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${encounter.status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+                                                        }`}>
+                                                        {encounter.status}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="space-y-1">
+                                                <p className="text-sm text-gray-900"><span className="font-medium">Chief Complaint:</span> {encounter.chief_complaint}</p>
+                                                {encounter.diagnosis && (
+                                                    <p className="text-sm text-gray-600"><span className="font-medium">Diagnosis:</span> {encounter.diagnosis}</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="mt-6 flex justify-end">
+                            <button
+                                onClick={() => setHistoryModalOpen(false)}
+                                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <div className="p-4 border-b border-gray-200">
                     <div className="relative">
@@ -190,7 +280,12 @@ export default function Patients() {
                                             {patient.abha_id || '-'}
                                         </td>
                                         <td className="px-6 py-4">
-                                            <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">View History</button>
+                                            <button
+                                                onClick={() => handleViewHistory(patient)}
+                                                className="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline"
+                                            >
+                                                View History
+                                            </button>
                                         </td>
                                     </tr>
                                 ))

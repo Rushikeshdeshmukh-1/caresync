@@ -26,25 +26,36 @@ class ChatRequest(BaseModel):
     message: str
     context: Dict[str, Any] = {}
 
+from backend.services.jwt_auth_service import get_current_user
+
 @router.post("/analyze")
-async def analyze_encounter(request: AnalyzeRequest, db: Session = Depends(get_db)):
+async def analyze_encounter(
+    request: AnalyzeRequest, 
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user)
+):
     """
     Analyze encounter notes and provide AI suggestions.
     """
     try:
+        # Pass user role/id to service if needed, or just use for auth check
         result = await copilot_service.analyze_encounter(
             db=db,
             encounter_id=request.encounter_id,
             notes=request.notes,
             patient_context=request.patient_context,
-            actor=request.actor
+            actor=current_user['role']  # Use actual user role
         )
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/chat")
-async def chat_with_copilot(request: ChatRequest, db: Session = Depends(get_db)):
+async def chat_with_copilot(
+    request: ChatRequest, 
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user)
+):
     """
     Chat with the Co-Pilot agent about an encounter.
     """

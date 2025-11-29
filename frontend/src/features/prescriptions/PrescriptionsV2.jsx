@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Search, X, Pill, User, Calendar, FileText } from 'lucide-react';
+import { useAuth } from '../../hooks/useAuth';
 
 const API_BASE = 'http://localhost:8000';
 
 export default function PrescriptionsV2() {
+    const { token } = useAuth();
     const [prescriptions, setPrescriptions] = useState([]);
     const [patients, setPatients] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -18,14 +20,20 @@ export default function PrescriptionsV2() {
     });
 
     useEffect(() => {
-        fetchPrescriptions();
-        fetchPatients();
-    }, []);
+        if (token) {
+            fetchPrescriptions();
+            fetchPatients();
+        }
+    }, [token]);
 
     const fetchPrescriptions = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`${API_BASE}/api/v2/prescriptions`);
+            const response = await fetch(`${API_BASE}/api/v2/prescriptions`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             const data = await response.json();
             setPrescriptions(data.prescriptions || []);
         } catch (error) {
@@ -37,7 +45,11 @@ export default function PrescriptionsV2() {
 
     const fetchPatients = async () => {
         try {
-            const response = await fetch(`${API_BASE}/api/patients?limit=100`);
+            const response = await fetch(`${API_BASE}/api/patients?limit=100`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             const data = await response.json();
             setPatients(data.patients || []);
         } catch (error) {
@@ -50,7 +62,10 @@ export default function PrescriptionsV2() {
         try {
             const response = await fetch(`${API_BASE}/api/v2/prescriptions`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: JSON.stringify(formData)
             });
 

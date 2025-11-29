@@ -5,24 +5,47 @@ Prevents unauthorized writes to mapping data resources
 
 import logging
 import json
+import yaml
+import os
 from datetime import datetime
 from typing import Any, Dict, Set
+from pathlib import Path
 from models.database import SessionLocal, OrchestratorAudit
 
 logger = logging.getLogger(__name__)
 
+# Load protected mapping resources from config file
+def _load_mapping_resources() -> Set[str]:
+    """Load protected mapping resources from YAML config"""
+    config_path = Path("config/mapping_resources.yml")
+    
+    if not config_path.exists():
+        logger.warning(f"Mapping resources config not found at {config_path}, using defaults")
+        # Fallback to hardcoded defaults
+        return {
+            "namaste.csv",
+            "data/namaste.csv",
+            "namaste_mappings_table",
+            "ayush_terms",
+            "mapping_candidates",
+            "mapping_index_faiss",
+            "data/faiss_index.bin",
+            "mapping_model_weights",
+            "data/reranker.joblib"
+        }
+    
+    try:
+        with open(config_path, 'r') as f:
+            config = yaml.safe_load(f)
+            resources = set(config.get('mapping_resources', []))
+            logger.info(f"Loaded {len(resources)} protected mapping resources from config")
+            return resources
+    except Exception as e:
+        logger.error(f"Error loading mapping resources config: {str(e)}")
+        return set()
+
 # Immutable set of protected mapping resources
-MAPPING_DATA_RESOURCES: Set[str] = {
-    "namaste.csv",
-    "data/namaste.csv",
-    "namaste_mappings_table",
-    "ayush_terms",  # Table name
-    "mapping_candidates",  # Table name
-    "mapping_index_faiss",
-    "data/faiss_index.bin",
-    "mapping_model_weights",
-    "data/reranker.joblib"
-}
+MAPPING_DATA_RESOURCES: Set[str] = _load_mapping_resources()
 
 
 def is_mapping_resource(resource: str) -> bool:
@@ -177,6 +200,9 @@ def safe_write(
                 "encounter_id": encounter_id
             }
         )
+        
+        # Increment blocked write counter (triggers auto-pause if threshold exceeded)
+        orchestrator_state.increment_blocked_writes()
         
         # Raise permission error
         raise PermissionError(

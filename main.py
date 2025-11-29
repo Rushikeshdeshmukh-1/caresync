@@ -64,6 +64,21 @@ from routes import (
     dashboard, appointments_v2, prescriptions_v2, billing_v2, icd11, orchestrator, copilot
 )
 
+# Import Phase 1 auth routes
+from backend.routes import auth
+
+# Import Phase 2 teleconsult & payment routes
+from backend.routes import teleconsult_payments
+
+# Import Phase 3 mapping enhancement routes
+from backend.routes import mapping_enhanced
+
+# Import Phase 4 admin console routes
+from backend.routes import admin
+
+# Import Phase 5-6 monitoring routes
+from backend.routes import monitoring
+
 load_dotenv()
 
 app = FastAPI(
@@ -89,6 +104,11 @@ app.add_middleware(
 )
 
 # Include routers
+app.include_router(monitoring.router)  # Monitoring (health, metrics) - no auth
+app.include_router(auth.router)  # Phase 1: Authentication routes
+app.include_router(teleconsult_payments.router)  # Phase 2: Teleconsult & Payments
+app.include_router(mapping_enhanced.router)  # Phase 3: Enhanced Mapping & Co-Pilot
+app.include_router(admin.router)  # Phase 4: Admin Console
 app.include_router(patients.router)
 app.include_router(appointments.router)
 app.include_router(encounters.router)
@@ -482,12 +502,120 @@ async def upload_fhir_bundle(
         raise HTTPException(status_code=400, detail=str(e))
 
 
+# ==================== Teleconsult Routes ====================
+
+@app.get("/api/teleconsult/appointments")
+async def get_teleconsult_appointments(request: FastAPIRequest):
+    """Get appointments for teleconsult"""
+    try:
+        db = get_db()
+        
+        query = """
+            SELECT 
+                a.id, a.patient_id, a.staff_id, a.appointment_date,
+                a.appointment_time, a.status, a.reason, a.notes,
+                a.room_url, a.teleconsult_enabled,
+                u1.name as patient_name, u2.name as doctor_name
+            FROM appointments a
+            LEFT JOIN users u1 ON a.patient_id = u1.id
+            LEFT JOIN users u2 ON a.staff_id = u2.id
+            WHERE a.teleconsult_enabled = 1
+            AND a.status IN ('scheduled', 'in-progress')
+            ORDER BY a.appointment_date, a.appointment_time
+        """
+        
+        results = db.execute(query).fetchall()
+        appointments = []
+        for row in results:
+            appointments.append({
+                "id": row[0], "patient_id": row[1], "staff_id": row[2],
+                "date": row[3], "time": row[4], "status": row[5],
+                "reason": row[6], "notes": row[7], "room_url": row[8],
+                "teleconsult_enabled": bool(row[9]),
+                "patient_name": row[10] or "Unknown",
+                "doctor_name": row[11] or "Unknown"
+            })
+        
+        return {"appointments": appointments}
+    except Exception as e:
+        logger.error(f"Error fetching teleconsult appointments: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/teleconsult/start-call")
+async def start_teleconsult_call(request: FastAPIRequest):
+    """Start a teleconsult video call"""
+    try:
+        data = await request.json()
+        appointment_id = data.get("appointment_id")
+        room_id = f"caresync-{appointment_id}-{uuid.uuid4().hex[:8]}"
+        jwt_token = f"demo-token-{uuid.uuid4().hex[:16]}"
+        room_url = f"https://meet.jit.si/{room_id}"
+        
+        db = get_db()
+        db.execute("""
+            UPDATE appointments 
+            SET room_token = ?, room_url = ?, session_started_at = ?, status = 'in-progress'
+            WHERE id = ?
+        """, (jwt_token, room_url, datetime.utcnow(), appointment_id))
+        db.commit()
+        
+        return {"room_id": room_id, "room_url": room_url, "jwt_token": jwt_token, "meeting_started": True}
+    except Exception as e:
+        logger.error(f"Error starting teleconsult: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/teleconsult/join-call")
+async def join_teleconsult_call(request: FastAPIRequest):
+    """Join teleconsult call"""
+    try:
+        data = await request.json()
+        room_id = data.get("room_id")
+        return {
+            "room_id": room_id,
+            "room_url": f"https://meet.jit.si/{room_id}",
+            "jwt_token": f"demo-token-{uuid.uuid4().hex[:16]}",
+            "meeting_started": True
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/teleconsult/end-call/{appointment_id}")
+async def end_teleconsult_call(appointment_id: str):
+    """End teleconsult call"""
+    try:
+        db = get_db()
+        result = db.execute("SELECT session_started_at FROM appointments WHERE id = ?", (appointment_id,)).fetchone()
+        duration = 0
+        if result and result[0]:
+            started_at = datetime.fromisoformat(result[0])
+            duration = int((datetime.utcnow() - started_at).total_seconds() / 60)
+        
+        db.execute("""
+            UPDATE appointments 
+            SET session_ended_at = ?, duration_minutes = ?, status = 'completed'
+            WHERE id = ?
+        """, (datetime.utcnow(), duration, appointment_id))
+        db.commit()
+        
+        return {"success": True, "duration_minutes": duration}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 # ==================== Web Interface ====================
 
-@app.get("/", response_class=HTMLResponse)
-async def web_interface(request: FastAPIRequest):
-    """Simple web interface for search and ProblemList creation"""
-    return templates.TemplateResponse("index.html", {"request": request})
+# Serve React Frontend (Production Mode)
+if os.path.exists("frontend/dist"):
+    app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="static")
+else:
+    @app.get("/", response_class=HTMLResponse)
+    async def web_interface(request: FastAPIRequest):
+        """Fallback if frontend build is missing"""
+        return templates.TemplateResponse("index.html", {"request": request})
+
 
 
 @app.get("/health")

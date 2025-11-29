@@ -2,7 +2,8 @@
 Prescriptions V2 API Routes
 """
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Request, Depends
+from backend.services.jwt_auth_service import get_current_user
 from typing import List, Optional
 from datetime import datetime
 import logging
@@ -77,16 +78,28 @@ async def list_prescriptions(
     from_date: Optional[str] = Query(None),
     to_date: Optional[str] = Query(None),
     limit: int = Query(50, ge=1, le=100),
-    offset: int = Query(0, ge=0)
+    offset: int = Query(0, ge=0),
+    current_user: dict = Depends(get_current_user)
 ):
-    """List prescriptions with filters"""
+    """List prescriptions with filters - FILTERED BY LOGGED-IN USER"""
     try:
         from_dt = datetime.fromisoformat(from_date) if from_date else None
         to_dt = datetime.fromisoformat(to_date) if to_date else None
         
+        # Apply role-based filtering
+        filter_patient_id = patient_id
+        filter_doctor_id = doctor_id
+        
+        if current_user['role'] == 'patient':
+            # Patients see ONLY their own prescriptions
+            filter_patient_id = current_user['id']
+        elif current_user['role'] == 'doctor':
+            # Doctors see prescriptions they created
+            filter_doctor_id = current_user['id']
+        
         prescriptions = prescriptions_service.list_prescriptions(
-            patient_id=patient_id,
-            doctor_id=doctor_id,
+            patient_id=filter_patient_id,
+            doctor_id=filter_doctor_id,
             appointment_id=appointment_id,
             from_date=from_dt,
             to_date=to_dt,

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Bot, AlertTriangle, CheckCircle, MessageSquare, Send, Loader, ChevronRight, ChevronDown } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth';
 
 export default function CoPilotPanel({ encounterId, notes, patientContext }) {
+    const { token } = useAuth();
     const [activeTab, setActiveTab] = useState('analysis'); // 'analysis' or 'chat'
     const [loading, setLoading] = useState(false);
     const [analysisResult, setAnalysisResult] = useState(null);
@@ -17,7 +19,10 @@ export default function CoPilotPanel({ encounterId, notes, patientContext }) {
         try {
             const response = await fetch('/api/copilot/analyze', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: JSON.stringify({
                     encounter_id: encounterId,
                     notes: notes,
@@ -49,7 +54,10 @@ export default function CoPilotPanel({ encounterId, notes, patientContext }) {
         try {
             const response = await fetch('/api/copilot/chat', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: JSON.stringify({
                     encounter_id: encounterId,
                     message: userMsg.content,
@@ -130,8 +138,8 @@ export default function CoPilotPanel({ encounterId, notes, patientContext }) {
                                         </h3>
                                         {analysisResult.warnings.map((warning, idx) => (
                                             <div key={idx} className={`p-3 rounded-lg border text-sm ${warning.severity === 'high'
-                                                    ? 'bg-red-50 border-red-200 text-red-800'
-                                                    : 'bg-amber-50 border-amber-200 text-amber-800'
+                                                ? 'bg-red-50 border-red-200 text-red-800'
+                                                : 'bg-amber-50 border-amber-200 text-amber-800'
                                                 }`}>
                                                 <div className="font-bold mb-1 flex items-center justify-between">
                                                     {warning.code}
@@ -215,8 +223,8 @@ export default function CoPilotPanel({ encounterId, notes, patientContext }) {
                             {chatHistory.map((msg, idx) => (
                                 <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                     <div className={`max-w-[85%] rounded-lg p-3 text-sm ${msg.role === 'user'
-                                            ? 'bg-blue-600 text-white rounded-br-none'
-                                            : 'bg-gray-100 text-gray-800 rounded-bl-none'
+                                        ? 'bg-blue-600 text-white rounded-br-none'
+                                        : 'bg-gray-100 text-gray-800 rounded-bl-none'
                                         }`}>
                                         {msg.content}
                                     </div>

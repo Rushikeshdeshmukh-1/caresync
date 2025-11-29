@@ -2,7 +2,7 @@
 Prescription Management API Routes
 """
 
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Request
 from pydantic import BaseModel
 from typing import Optional, List
 from datetime import datetime
@@ -33,18 +33,41 @@ class PrescriptionCreate(BaseModel):
 
 
 @router.get("")
-async def get_all_prescriptions(limit: int = 50, token: str = "demo-token"):
-    """Get all prescriptions (for list view)"""
+async def get_all_prescriptions(limit: int = 50, request: Request = None):
+    """Get prescriptions - FILTERED BY LOGGED-IN USER"""
     try:
+        # Get user from token
+        from backend.services.jwt_auth_service import AuthenticationService
+        auth_service = AuthenticationService()
+        
+        auth_header = request.headers.get("Authorization", "") if request else ""
+        if not auth_header.startswith("Bearer "):
+            raise HTTPException(status_code=401, detail="Missing or invalid authorization header")
+        
+        token = auth_header[7:]
+        current_user = auth_service.verify_access_token(token)
+        
+        if not current_user:
+            raise HTTPException(status_code=401, detail="Invalid or expired token")
+        
         session = SessionLocal()
-        prescriptions = session.query(Prescription).order_by(Prescription.prescription_date.desc()).limit(limit).all()
+        query = session.query(Prescription)
+        
+        # CRITICAL: Filter by user role
+        if current_user['role'] == 'patient':
+            # Patients see ONLY their own prescriptions
+            query = query.filter(Prescription.patient_id == current_user['id'])
+        elif current_user['role'] == 'doctor':
+            # Doctors see prescriptions they created
+            query = query.filter(Prescription.staff_id == current_user['id'])
+        # Admins see all prescriptions (no filter)
+        
+        prescriptions = query.order_by(Prescription.prescription_date.desc()).limit(limit).all()
         
         result = []
         for pres in prescriptions:
-            # Get items for each prescription to display summary
             items = session.query(PrescriptionItem).filter(PrescriptionItem.prescription_id == pres.id).all()
             
-            # Create a string representation of medications for the frontend list view
             medications_str = "\n".join([
                 f"{item.medicine_name} ({item.dosage or ''}) - {item.frequency or ''} for {item.duration or ''}"
                 for item in items
@@ -60,9 +83,12 @@ async def get_all_prescriptions(limit: int = 50, token: str = "demo-token"):
         
         session.close()
         return {"prescriptions": result}
+    except HTTPException:
+        raise
     except Exception as e:
-        logger.error(f"Error getting all prescriptions: {str(e)}")
+        logger.error(f"Error getting prescriptions: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
 
 
 @router.post("")

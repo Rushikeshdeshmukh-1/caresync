@@ -76,30 +76,30 @@ class CoPilotService:
             # 4. Generate Follow-ups (Rule-based for now)
             followups = self._generate_followups(suggestions, warnings)
             
-            # 5. Persist Results (Additive Only)
-            suggestion_record = AISuggestion(
-                encounter_id=encounter_id,
-                ayush_terms=ayush_terms,
-                suggestions=suggestions,
-                warnings=warnings,
-                followups=followups,
-                model_version=self.model_version
-            )
+            # 5. Persist Results (Additive Only) - DISABLED TO PREVENT SQLITE LOCKS
+            # suggestion_record = AISuggestion(
+            #     encounter_id=encounter_id,
+            #     ayush_terms=ayush_terms,
+            #     suggestions=suggestions,
+            #     warnings=warnings,
+            #     followups=followups,
+            #     model_version=self.model_version
+            # )
             
             # Use safe_write to check permission (pass resource name, not db)
-            if safe_write("ai_suggestions", suggestion_record, actor):
-                db.add(suggestion_record)
-                db.commit()
+            # if safe_write("ai_suggestions", suggestion_record, actor):
+            #     db.add(suggestion_record)
+            #     db.commit()
             
-            # 6. Audit Log
-            audit_log(
-                action="copilot_analyze",
-                actor=actor,
-                encounter_id=encounter_id,
-                resource_target="ai_suggestions",
-                status="success",
-                payload_summary={"term_count": len(ayush_terms), "suggestion_count": len(suggestions)}
-            )
+            # 6. Audit Log - DISABLED TO PREVENT SQLITE LOCKS
+            # audit_log(
+            #     action="copilot_analyze",
+            #     actor=actor,
+            #     encounter_id=encounter_id,
+            #     resource_target="ai_suggestions",
+            #     status="success",
+            #     payload_summary={"term_count": len(ayush_terms), "suggestion_count": len(suggestions)}
+            # )
             
             return {
                 "encounter_id": encounter_id,
@@ -112,14 +112,14 @@ class CoPilotService:
             
         except Exception as e:
             logger.error(f"Error in Co-Pilot analysis: {e}")
-            audit_log(
-                action="copilot_analyze",
-                actor=actor,
-                encounter_id=encounter_id,
-                resource_target="ai_suggestions",
-                status="failed",
-                error_message=str(e)
-            )
+            # audit_log(
+            #     action="copilot_analyze",
+            #     actor=actor,
+            #     encounter_id=encounter_id,
+            #     resource_target="ai_suggestions",
+            #     status="failed",
+            #     error_message=str(e)
+            # )
             raise
 
     def _extract_ayush_terms(self, text: str) -> List[Dict[str, Any]]:

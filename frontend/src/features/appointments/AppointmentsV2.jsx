@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Clock, User, Plus, Search, X } from 'lucide-react';
+import { useAuth } from '../../hooks/useAuth';
 
 const API_BASE = 'http://localhost:8000';
 
 export default function AppointmentsV2() {
+    const { token } = useAuth();
     const [appointments, setAppointments] = useState([]);
     const [patients, setPatients] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -19,9 +21,11 @@ export default function AppointmentsV2() {
     });
 
     useEffect(() => {
-        fetchAppointments();
-        fetchPatients();
-    }, [filter]);
+        if (token) {
+            fetchAppointments();
+            fetchPatients();
+        }
+    }, [filter, token]);
 
     const fetchAppointments = async () => {
         try {
@@ -29,7 +33,11 @@ export default function AppointmentsV2() {
             const params = new URLSearchParams();
             if (filter.status !== 'all') params.append('status', filter.status);
 
-            const response = await fetch(`${API_BASE}/api/v2/appointments?${params}`);
+            const response = await fetch(`${API_BASE}/api/v2/appointments?${params}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             const data = await response.json();
             setAppointments(data.appointments || []);
         } catch (error) {
@@ -41,7 +49,11 @@ export default function AppointmentsV2() {
 
     const fetchPatients = async () => {
         try {
-            const response = await fetch(`${API_BASE}/api/patients?limit=100`);
+            const response = await fetch(`${API_BASE}/api/patients?limit=100`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             const data = await response.json();
             console.log('Fetched patients:', data);
             setPatients(data.patients || []);
@@ -55,7 +67,10 @@ export default function AppointmentsV2() {
         try {
             const response = await fetch(`${API_BASE}/api/v2/appointments`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: JSON.stringify(formData)
             });
 
@@ -81,7 +96,10 @@ export default function AppointmentsV2() {
 
         try {
             const response = await fetch(`${API_BASE}/api/v2/appointments/${id}/cancel`, {
-                method: 'POST'
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             });
 
             if (response.ok) {

@@ -2,7 +2,8 @@
 Appointments V2 API Routes
 """
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Request, Depends
+from backend.services.jwt_auth_service import get_current_user
 from typing import Optional, List
 from datetime import datetime
 import logging
@@ -74,9 +75,9 @@ async def list_appointments(
     to_date: Optional[str] = Query(None, alias="to"),
     page: int = Query(1, ge=1),
     limit: int = Query(50, ge=1, le=100),
-    token: str = "demo-token"
+    current_user: dict = Depends(get_current_user)
 ):
-    """List appointments with filters"""
+    """List appointments with filters - FILTERED BY LOGGED-IN USER"""
     try:
         # Parse dates
         from_dt = datetime.fromisoformat(from_date) if from_date else None
@@ -85,9 +86,20 @@ async def list_appointments(
         # Calculate offset
         offset = (page - 1) * limit
         
+        # Apply role-based filtering
+        filter_patient_id = patientId
+        filter_doctor_id = doctorId
+        
+        if current_user['role'] == 'patient':
+            # Patients see ONLY their own appointments
+            filter_patient_id = current_user['id']
+        elif current_user['role'] == 'doctor':
+            # Doctors see appointments where they are the staff
+            filter_doctor_id = current_user['id']
+        
         appointments = appointments_service.list_appointments(
-            patient_id=patientId,
-            doctor_id=doctorId,
+            patient_id=filter_patient_id,
+            doctor_id=filter_doctor_id,
             status=status,
             from_date=from_dt,
             to_date=to_dt,

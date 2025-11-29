@@ -2,7 +2,7 @@
 Appointment Scheduling API Routes
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 from typing import Optional, List
 from datetime import datetime
@@ -54,12 +54,10 @@ async def create_appointment(appointment: AppointmentCreate, token: str = "demo-
         # Use default staff if not provided
         staff_id = appointment.staff_id
         if not staff_id:
-            # Try to find any staff or use a placeholder
             staff = session.query(Staff).first()
             if staff:
                 staff_id = staff.id
             else:
-                # Create a dummy staff if none exists (for demo purposes)
                 staff = Staff(id=str(uuid.uuid4()), name="Dr. Rushikesh", staff_type="doctor")
                 session.add(staff)
                 session.commit()
@@ -101,13 +99,38 @@ async def list_appointments(
     status: Optional[str] = None,
     date_from: Optional[str] = None,
     date_to: Optional[str] = None,
-    token: str = "demo-token"
+    request: Request = None
 ):
-    """List appointments with filtering"""
+    """List appointments with filtering - FILTERED BY LOGGED-IN USER"""
     try:
+        # Get user from token
+        from backend.services.jwt_auth_service import AuthenticationService
+        auth_service = AuthenticationService()
+        
+        auth_header = request.headers.get("Authorization", "") if request else ""
+        if not auth_header.startswith("Bearer "):
+            # For backward compatibility, allow without auth but return empty
+            return {"total": 0, "skip": skip, "limit": limit, "appointments": []}
+        
+        token = auth_header[7:]
+        current_user = auth_service.verify_access_token(token)
+        
+        if not current_user:
+            return {"total": 0, "skip": skip, "limit": limit, "appointments": []}
+        
         session = SessionLocal()
         query = session.query(Appointment)
         
+        # CRITICAL: Filter by user role
+        if current_user['role'] == 'patient':
+            # Patients see ONLY their own appointments
+            query = query.filter(Appointment.patient_id == current_user['id'])
+        elif current_user['role'] == 'doctor':
+            # Doctors see appointments where they are the staff
+            query = query.filter(Appointment.staff_id == current_user['id'])
+        # Admins see all appointments (no filter)
+        
+        # Apply additional filters
         if patient_id:
             query = query.filter(Appointment.patient_id == patient_id)
         if staff_id:
@@ -117,10 +140,8 @@ async def list_appointments(
         if status:
             query = query.filter(Appointment.status == status)
         
-        # Join with Patient table to get patient names
         results = query.order_by(Appointment.appointment_date.desc()).offset(skip).limit(limit).all()
         
-        # Get patient names manually for now (or use join if configured)
         appointments_list = []
         for apt in results:
             patient = session.query(Patient).filter(Patient.id == apt.patient_id).first()
@@ -132,6 +153,7 @@ async def list_appointments(
                 "patient_name": patient_name,
                 "staff_id": apt.staff_id,
                 "date": apt.appointment_date.isoformat() if apt.appointment_date else None,
+                "time": apt.appointment_time,
                 "status": apt.status,
                 "reason": apt.reason,
                 "created_at": apt.created_at.isoformat() if apt.created_at else None
@@ -146,6 +168,8 @@ async def list_appointments(
             "limit": limit,
             "appointments": appointments_list
         }
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error listing appointments: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))

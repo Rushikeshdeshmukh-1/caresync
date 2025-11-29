@@ -1,0 +1,44 @@
+---
+# Protected Mapping Resources Configuration
+# These resources are READ-ONLY and cannot be modified by the orchestrator or any automated process
+# Any write attempts will be blocked, logged, and trigger admin alerts
+
+mapping_resources:
+  # CSV Data Files
+  - data/namaste.csv
+  - data/icd11_codes.csv
+  - namaste.csv
+  - icd11_codes.csv
+  
+  # FAISS Indices
+  - data/faiss_index.bin
+  - data/icd_index.faiss
+  - data/copilot_knowledge.faiss
+  - mapping_index_faiss
+  
+  # Model Weights
+  - data/reranker.joblib
+  - mapping_model_weights
+  
+  # Database Tables
+  - ayush_terms
+  - mapping_candidates
+  - icd_codes
+  - namaste_mappings_table
+  
+  # NumPy Arrays
+  - data/icd_texts.npy
+  - data/icd_texts_codes.npy
+  - data/copilot_texts.npy
+  - data/copilot_texts_codes.npy
+
+# Allowed write resources (for reference)
+allowed_write_resources:
+  - mapping_feedback
+  - mapping_proposals
+  - mapping_versions
+  - ai_suggestions
+  - encounter_diagnoses
+  - orchestrator_audit
+  - review_queue
+  - claim_packets
